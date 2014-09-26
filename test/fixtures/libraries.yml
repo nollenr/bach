@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idofparent: 1
+  name: MyString
+  isroot: false
+  isleaf: false
+
+two:
+  idofparent: 1
+  name: MyString
+  isroot: false
+  isleaf: false

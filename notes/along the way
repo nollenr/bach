@@ -1,0 +1,4 @@
+rails g model Library idofparent:integer name:string isroot:boolean isleaf:boolean
+rake db:migrate
+git commit -m "Commit of library model and db migration."
+
