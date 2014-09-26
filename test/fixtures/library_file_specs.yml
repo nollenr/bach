@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idoflibraryrecord: 1
+  filesizeinmb: 1
+  artist: MyString
+  album: MyString
+  length: 
+
+two:
+  idoflibraryrecord: 1
+  filesizeinmb: 1
+  artist: MyString
+  album: MyString
+  length: 

@@ -4,3 +4,5 @@ git add .
 git commit -m "Commit of library model and db migration."
 git push -u origin v0.1
 
+rails g migration AddNotNullToLibrary
+
