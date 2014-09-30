@@ -94,7 +94,6 @@ GEM
       polyamorous (~> 1.1)
     rdoc (4.1.0)
     ref (1.0.5)
-    ruby-mp3info (0.8.5)
     sass (3.2.19)
     sass-rails (4.0.3)
       railties (>= 4.0.0, < 5.0)
@@ -116,6 +115,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    taglib-ruby (0.4.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -144,9 +144,9 @@ DEPENDENCIES
   pg (~> 0.17)
   rails (= 4.1.6)
   ransack (~> 1.4.1)
-  ruby-mp3info
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   simple_form (~> 3.0.2)
+  taglib-ruby (= 0.4.0)
   therubyracer (~> 0.12.1)
   uglifier (~> 2.5.3)

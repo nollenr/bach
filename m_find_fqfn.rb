@@ -11,11 +11,10 @@ def m_find_fqfn(p_active_record, p_fqfn = nil)
   # TODO: Stop recursion if it gets "too" deep.
   if p_active_record.isroot
     if p_fqfn
-      puts p_active_record.name + "/" + p_fqfn
+      return p_active_record.name + "/" + p_fqfn
     else
-      puts p_active_record.name
+      return p_active_record.name
     end
-    return true
   else
     parentLibItem = Library.find(p_active_record.idofparent)
     if p_fqfn

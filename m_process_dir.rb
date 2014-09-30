@@ -13,17 +13,17 @@ def m_process_dir(p_dir_name, p_parent_id = nil)
   unfortunately, empty directories may also be "leafs",
   but the "isleaf" will not be set for these phenomenon
 =end
-  if p_parent_id.nil?
+  if p_parent_id.nil?  # This is a "root" level entry
     myLibItem = Library.new
-    myLibItem.name = Dir.pwd
+    myLibItem.name = p_dir_name
     myLibItem.isroot = true
     myLibItem.save
     v_parent_id = myLibItem.id
+    Dir.chdir(p_dir_name)
   else
     v_parent_id = p_parent_id
   end
   Dir.foreach(p_dir_name) do |x|
-    puts "Entry #{x}"
     next if x.eql? '.' or x.eql? '..' # do not add '.' and '..' to the library
 
     # The next 3 lines are the same for files and directories

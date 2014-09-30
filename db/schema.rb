@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926213206) do
+ActiveRecord::Schema.define(version: 20140929230454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 20140926213206) do
     t.decimal  "length"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "comment"
+    t.string   "genre"
+    t.string   "title"
+    t.string   "track"
+    t.string   "year"
   end
 
   add_index "library_file_specs", ["idoflibraryrecord"], name: "index_library_file_specs_on_idoflibraryrecord", unique: true, using: :btree

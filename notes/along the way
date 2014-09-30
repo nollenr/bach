@@ -6,3 +6,16 @@ git push -u origin v0.1
 
 rails g migration AddNotNullToLibrary
 
+load all of the files
+When test.rb is loaded, it runs
+
+
+
+yum install taglib-devel
+gem install taglib-ruby -v0.4.0
+(taglib 1.7 or greater needed for taglib-ruby 0.7.0)
+(the version available for CentOS is only 
+see: https://github.com/robinst/taglib-ruby/issues/13
+     https://github.com/robinst/taglib-ruby/issues/7
+     http://taglib.github.io/ 
+     http://www.rpmfind.net/linux/rpm2html/search.php?query=taglib&submit=Search+...&system=centos&arch=
