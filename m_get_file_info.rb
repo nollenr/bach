@@ -6,6 +6,12 @@ def m_get_file_info (p_fqfn)
     v_val_hash = Hash.new
     v_val_hash[:file_size] = File.size(p_fqfn)
     TagLib::FileRef.open(p_fqfn) do |fileref|
+      prop = fileref.audio_properties
+      v_val_hash[:bitrate] = prop.bitrate
+      v_val_hash[:channels] = prop.channels
+      v_val_hash[:length] = prop.length
+      v_val_hash[:sample_rate] = prop.sample_rate
+
       tag = fileref.tag
       v_val_hash[:album] =  tag.album
       v_val_hash[:artist] = tag.artist

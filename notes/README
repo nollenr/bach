@@ -1,0 +1,7 @@
+After the system is set up, migrations are completed, code is installed:
+
+1.  Create the Library
+    m_process_dir(<directory path>)
+    
+2.  Populate the Libary File Spec
+    m_process_file_specs (load 'm_process_file_specs.rb')
