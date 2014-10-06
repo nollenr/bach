@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140930160223) do
+ActiveRecord::Schema.define(version: 20141006182759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "file_extensions", force: true do |t|
+    t.string   "extension",                   null: false
+    t.boolean  "process_tag", default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "file_extensions", ["extension"], name: "index_file_extensions_on_extension", unique: true, using: :btree
 
   create_table "libraries", force: true do |t|
     t.integer  "idofparent"

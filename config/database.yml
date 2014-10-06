@@ -24,7 +24,7 @@ default: &default
 development:
   <<: *default
   database: bachdb
-  host: 192.168.152.94
+  host: 192.168.152.93
   port: 1521
   username: bach
   password: bach
