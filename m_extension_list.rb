@@ -1,9 +1,9 @@
 ext_hash = Hash.new
 Library.where("isleaf = true").find_each do |myfile|
   puts   "-------------file: #{myfile.name}"
-  if m = /.*(?<extension>\..+$)/.match(myfile.name)
+  if v_file_extension = m_file_extension(myfile.name)
     # puts "             Matchdata: #{m[:extension]}"
-    ext_hash.has_key?(m[:extension]) ? ext_hash[m[:extension]] += 1 : ext_hash[m[:extension]] = 1
+    ext_hash.has_key?(v_file_extension) ? ext_hash[v_file_extension] += 1 : ext_hash[v_file_extension] = 1
   else
     puts "             no extension found"
   end

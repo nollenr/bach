@@ -1,7 +1,38 @@
-After the system is set up, migrations are completed, code is installed:
+1.  Recreate the database:
+    CREATE DATABASE bachdb
+      WITH OWNER = bach
+           ENCODING = 'UTF8'
+           TABLESPACE = bachdb
+           LC_COLLATE = 'en_US.UTF-8'
+           LC_CTYPE = 'en_US.UTF-8'
+           CONNECTION LIMIT = -1;
 
-1.  Create the Library
+2.  Execute the db migrations (from the command prompt)
+    rake db:migrate
+
+3.  Load the methods (in rails console)
+    require 'taglib'
+    load 'm_find_fqfn.rb'
+    load 'm_get_file_info.rb'
+    load 'm_process_dir.rb'
+    load 'm_file_extension.rb'
+
+
+4.  Create the Library
     m_process_dir(<directory path>)
+    m_process_dir('/media/nollenr-r7e64/music')
+    m_process_dir('/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE')
+    m_process_dir('/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER')
+
+5.  Load the extension list (all known extensions in the library) and set the flag to true for files
+    with a tag.
+    load 'm_extension_list.rb' 
+    FileExtension.where(:extension => ['.mp3','.m4p','.m4a','.m4b']).update_all(:process_tag => true)
     
-2.  Populate the Libary File Spec
-    m_process_file_specs (load 'm_process_file_specs.rb')
+6.  Populate the Libary File Spec
+    load 'm_process_file_specs.rb'
+    
+7.  Check for Library leaf entries that have no details
+    load 'm_library_leaf_records_wo_details.rb'
+    
+    
