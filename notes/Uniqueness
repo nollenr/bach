@@ -1,0 +1,57 @@
+What determines uniqueness?
+
+Library:
+  id serial NOT NULL,
+  idofparent integer,
+  name character varying(255) NOT NULL,
+  isroot boolean NOT NULL DEFAULT false,
+  isleaf boolean NOT NULL DEFAULT false,
+  created_at timestamp without time zone,
+  updated_at timestamp without time zone,
+  CONSTRAINT libraries_pkey PRIMARY KEY (id)
+  
+  Name
+
+Library File Specs:
+  id serial NOT NULL,
+  idoflibraryrecord integer,
+  filesizeinmb integer,
+  artist character varying(255),
+  album character varying(255),
+  length numeric,
+  created_at timestamp without time zone,
+  updated_at timestamp without time zone,
+  comment character varying(255),
+  genre character varying(255),
+  title character varying(255),
+  track character varying(255),
+  year character varying(255),
+  bitrate integer,
+  channels integer,
+  
+  Levels?
+  Level  1 
+  Level  2
+  Level  3
+  Level  4
+  Level  5
+  ...
+  
+  Level 10 - Everything matches including filename, parent directory and size
+  What does the model look like?  
+  
+  1.  the title has to match... if the titles are different, then expect it to be different  (what about those with no title?)
+      what about the opposite? Can I have two titles that are different, but the same resource?
+  2.  artist (same artist same title on different albums)
+  3.  album
+  4.  track
+  5.  year
+  6.  length
+  7.  filesize
+  8.  parent directory
+  
+  
+  Selection
+  Higher bitrate?
+  Higher channels?
+  
