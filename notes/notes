@@ -7,3 +7,4 @@ Priority    Task
 High        Error logging and messages
 High        Make all methods loadable and then executable (no execute on load)
 High        Change LibraryFileSpec model.  Track should be an integer, not character varying.
+High        Change LibraryFileSpec model.  Add file extension (or file type?).  Break the filename in 2 pieces?

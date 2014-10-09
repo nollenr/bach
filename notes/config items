@@ -6,12 +6,15 @@ Options : take mp3 over m4a
 
 #2 - 
 Default : Ignore track numbers when determining duplicates (group by title, artist, album)
+          scope : default_group_by
 Options : Include track numbers when determining duplicates (group by title, artist, album, track)
           (Example... Last Look (album)... track numbers are off for m4a files)
+          to enable the option add the scope (in addition to the default_group_by) : add_track_to_group_by
 #3
 Default : Do not include parent directory when determining duplicates
 Options : Include parent directory when determing duplicates
           (Example... White Christmas (title)... Diana Krall (artist)... I will get duplicates if I include parent directory)
+          to enable the option add the scope (in addition to any others, including default_group by) : with_parent_dir
 
 #4
 Default : Include all "unknowns" titles/albums (at this time I believe there are 22 records)
@@ -42,9 +45,6 @@ and       upper(lfs.title) not like 'TRACK%'
 group by  lfs.title
 ,         lfs.artist
 ,         lfs.album
--- LibraryFileSpec.where.not(title: nil).where("upper(title) not like 'TRACK%'").group(:title, :album, :artist).count
--- LibraryFileSpec.has_title.title_not_like_track.default_group_by.count  <= Returns a hash of array=>count
--- LibraryFileSpec.has_title.title_not_like_track.default_group_by.with_parent_dir.count
 union
 select    lfs.id
 ,         lfs.title
