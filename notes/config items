@@ -43,7 +43,8 @@ group by  lfs.title
 ,         lfs.artist
 ,         lfs.album
 -- LibraryFileSpec.where.not(title: nil).where("upper(title) not like 'TRACK%'").group(:title, :album, :artist).count
--- LibraryFileSpec.has_title.title_not_like_track.group_no_track_no_parent_dir.count
+-- LibraryFileSpec.has_title.title_not_like_track.default_group_by.count  <= Returns a hash of array=>count
+-- LibraryFileSpec.has_title.title_not_like_track.default_group_by.with_parent_dir.count
 union
 select    lfs.id
 ,         lfs.title
