@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141015171119) do
+ActiveRecord::Schema.define(version: 20141015172440) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20141015171119) do
     t.integer  "bitrate"
     t.integer  "channels"
     t.integer  "sample_rate"
-    t.string   "file_extension"
+    t.string   "file_extension",    null: false
   end
 
   add_index "library_file_specs", ["idoflibraryrecord"], name: "index_library_file_specs_on_idoflibraryrecord", unique: true, using: :btree

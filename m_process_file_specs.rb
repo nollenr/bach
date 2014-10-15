@@ -2,6 +2,7 @@
 ext_hash = Hash.new
 FileExtension.all.map{|x| ext_hash[x.extension] = x.process_tag}
 
+# Find all leaf records, where the id is not already in the libary_file_specs table (only process "new" records)
 Library.where("isleaf = true").where.not(id: LibraryFileSpec.select("idoflibraryrecord")).find_each do |myfile|
   v_file_extension = m_file_extension(myfile.name)
   next if v_file_extension.nil? # No extension on this file... skip it.
@@ -26,6 +27,6 @@ Library.where("isleaf = true").where.not(id: LibraryFileSpec.select("idoflibrary
     :album => v_hash[:album],     :artist => v_hash[:artist], :comment => v_hash[:comment],
     :genre => v_hash[:genre],     :title => v_hash[:title],   :track => v_hash[:track],
     :year => v_hash[:year],       :length => v_hash[:length], :channels => v_hash[:channels],
-    :bitrate => v_hash[:bitrate], :sample_rate => v_hash[:sample_rate])
+    :bitrate => v_hash[:bitrate], :sample_rate => v_hash[:sample_rate], :file_extension => v_file_extension)
 
 end
