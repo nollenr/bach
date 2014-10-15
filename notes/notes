@@ -1,10 +1,12 @@
 Date        Version     Notes
 20140908    v0.1        Create a method to return the extension or nil if there is not one.
+20141015    v0.1        Change LibraryFileSpec model.  Track should be an integer, not character varying.
+20141015    v0.1        Change LibraryFileSpec model.  Add file extension (or file type?). 
 
 
 TODO:
 Priority    Task
 High        Error logging and messages
 High        Make all methods loadable and then executable (no execute on load)
-High        Change LibraryFileSpec model.  Track should be an integer, not character varying.
-High        Change LibraryFileSpec model.  Add file extension (or file type?).  Break the filename in 2 pieces?
+High        Change code to add file_extension to LibraryFileSpec.
+
