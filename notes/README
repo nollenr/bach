@@ -19,6 +19,9 @@
 
 
 4.  Create the Library
+    LibraryRoot.create(name: "/media/nollenr-r7e64/music", priority: 1)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE", priority: 2)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER", priority: 3)
     m_process_dir(<directory path>)
     m_process_dir('/media/nollenr-r7e64/music')
     m_process_dir('/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE')
