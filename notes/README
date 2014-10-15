@@ -28,6 +28,11 @@
     with a tag.
     load 'm_extension_list.rb' 
     FileExtension.where(:extension => ['.mp3','.m4p','.m4a','.m4b']).update_all(:process_tag => true)
+    FileExtension.where(extension: '.m4a').update_all(sort_order: 1, description: "DRM Free")
+    FileExtension.where(extension: '.mp3').update_all(sort_order: 2)
+    FileExtension.where(extension: '.m4p').update_all(sort_order: 3, description: "iTunes format includes DRM")
+    FileExtension.where(extension: '.m4b').update_all(description: 'MPEG-4 Audio Book')
+    
     
 6.  Populate the Libary File Spec
     load 'm_process_file_specs.rb'
