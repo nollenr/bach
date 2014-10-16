@@ -15,3 +15,4 @@ Priority    			Task
 High        			Error logging and messages
 High        			Make all methods loadable and then executable (no execute on load)
 High					Include library priority when selecting a track 
+High					Include update logic for MasterLibraryFile (currently, the method only creates new records).

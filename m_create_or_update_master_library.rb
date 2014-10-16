@@ -32,25 +32,24 @@ def m_create_or_update_master_library
         myrec = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).first
       end
     end
-    file_fqfn = m_find_fqfn(Library.find(myrec.idoflibraryrecord))
-    MasterLibraryFile.create(
-      idoflibraryrecord: myrec.idoflibraryrecord,
-      idoflibaryfilespecrecord: myrec.id,
-      filesizeinmb: myrec.filesizeinmb,
-      artist: myrec.artist,
-      album: myrec.album,
-      length: myrec.length,
-      comment: myrec.comment,
-      genre: myrec.genre,
-      title: myrec.title,
-      track: myrec.track,
-      year: myrec.year,
-      bitrate: myrec.bitrate,
-      channels: myrec.channels,
-      sample_rate: myrec.sample_rate,
-      file_extension: myrec.file_extension,
-      library_priority: myrec.library_priority,
-      original_directory_location: file_fqfn)
+    m_create_master_library_record(myrec)
   end
-  return nil
+  
+  LibraryFileSpec.include_unknowns.each do |myrec|
+    m_create_master_library_record(myrec)
+  end
+  
+  LibraryFileSpec.titles_like_track.each do |track, num_lib_entries|
+    v_artist = track[0]
+    v_album = track[1]
+    v_title = track[2]
+    myrec = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).first
+    m_create_master_library_record(myrec)
+  end
+  
+  LibraryFileSpec.titles_like_track_no_album.each do |myrec|
+    m_create_master_library_record(myrec)
+  end
+  
+  return true
 end

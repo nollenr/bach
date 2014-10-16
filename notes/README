@@ -53,4 +53,11 @@
 7.  Check for Library leaf entries that have no details
     load 'm_library_leaf_records_wo_details.rb'
     
+8.  Load the Master Library (MasterLibraryFile)
+    load 'm_find_file.rb'
+    load 'm_create_master_library_record.rb'
+    load 'm_create_or_replace_master_library.rb'
+    m_create_or_replace_master_library
+    
+    
     

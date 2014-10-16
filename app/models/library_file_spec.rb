@@ -57,7 +57,7 @@ class LibraryFileSpec < ActiveRecord::Base
   # config item 5                                              #
   ##############################################################  
   def self.titles_like_track
-    where("upper(title) like 'TRACK%'").where.not(album: nil).group(:track, :album, :artist).count
+    where("upper(title) like 'TRACK%'").where.not(album: nil).group(:artist, :album, :title).count
   end
   def self.titles_like_track_no_album
     where("upper(title) like 'TRACK%'").where(album: nil)
