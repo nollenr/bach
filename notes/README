@@ -1,4 +1,8 @@
-1.  Recreate the database:
+1.  Recreate the tablespace and database:
+	CREATE TABLESPACE bachdb
+	  OWNER bach
+	  LOCATION '/u02/pgsql/bachdb';
+
     CREATE DATABASE bachdb
       WITH OWNER = bach
            ENCODING = 'UTF8'
@@ -9,6 +13,12 @@
 
 2.  Execute the db migrations (from the command prompt)
     rake db:migrate
+    
+2a. Mount the music libraries
+	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o user=nollenr,uid=501,gid=502
+	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o user=nollenr,uid=501,gid=502
+
+
 
 3.  Load the methods (in rails console)
     require 'taglib'
@@ -16,20 +26,20 @@
     load 'm_get_file_info.rb'
     load 'm_process_dir.rb'
     load 'm_file_extension.rb'
+    load 'm_process_libraries.rb'
+    load 'm_extension_list.rb'
+    load 'm_process_file_specs.rb'
 
 
 4.  Create the Library
     LibraryRoot.create(name: "/media/nollenr-r7e64/music", priority: 1)
     LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE", priority: 2)
     LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER", priority: 3)
-    m_process_dir(<directory path>)
-    m_process_dir('/media/nollenr-r7e64/music')
-    m_process_dir('/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE')
-    m_process_dir('/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER')
+    m_process_libraries
 
 5.  Load the extension list (all known extensions in the library) and set the flag to true for files
     with a tag.
-    load 'm_extension_list.rb' 
+    m_extension_list
     FileExtension.where(:extension => ['.mp3','.m4p','.m4a','.m4b']).update_all(:process_tag => true)
     FileExtension.where(extension: '.m4a').update_all(sort_order: 1, description: "DRM Free")
     FileExtension.where(extension: '.mp3').update_all(sort_order: 2)
@@ -38,7 +48,7 @@
     
     
 6.  Populate the Libary File Spec
-    load 'm_process_file_specs.rb'
+    m_process_file_specs
     
 7.  Check for Library leaf entries that have no details
     load 'm_library_leaf_records_wo_details.rb'

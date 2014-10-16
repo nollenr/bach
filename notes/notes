@@ -6,9 +6,12 @@ Date        Version     Notes
 20141015    v0.1		Added the model LibraryRoot.  This is the top level directory structure
 						of a music library and also contains a priority which will be used to 
 						select a single track where there exists multiple.
+20141016	v0.1		Added "library_priority" to LibraryFileSpec.
+20141016	v0.1		Change code to include "Priority" on LibraryFileSpec
+
 
 TODO:
 Priority    			Task
 High        			Error logging and messages
 High        			Make all methods loadable and then executable (no execute on load)
-High					Change code to include "Priority" on LibraryFileSpec
+
