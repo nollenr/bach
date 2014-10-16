@@ -10,7 +10,7 @@ def m_process_file_specs
     temphash[:dirarray] = Pathname(rootrec.name).each_filename.to_a
     rootrecarray.push(temphash)
   end
-  puts rootrecarray.inspect
+  # puts rootrecarray.inspect
   
   # Find all leaf records, where the id is not already in the libary_file_specs table (only process "new" records)
   Library.where("isleaf = true").where.not(id: LibraryFileSpec.select("idoflibraryrecord")).find_each do |myfile|
@@ -37,8 +37,8 @@ def m_process_file_specs
     v_priority = nil
     rootrecarray.each do |rootrec|
       # file_fqfn contains rootrec
-      puts rootrec[:dirarray].inspect
-      puts Pathname(file_fqfn).each_filename.to_a.inspect
+      # puts rootrec[:dirarray].inspect
+      # puts Pathname(file_fqfn).each_filename.to_a.inspect
       next unless (rootrec[:dirarray] & Pathname(file_fqfn).each_filename.to_a == rootrec[:dirarray])
       v_priority = rootrec[:priority]
       break

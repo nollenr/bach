@@ -26,7 +26,7 @@ class LibraryFileSpec < ActiveRecord::Base
   
   # all of the following are to be used with a ".count"
   def self.default_group_by
-    group(:title, :album, :artist)
+    group(:artist, :album, :title)
   end
   
   def self.add_track_to_group_by
