@@ -66,5 +66,9 @@
     m_create_or_update_master_library
     
 9.  A quick check that the number of tracks (artist, album, title) in the library is the same as the number in the master
-    m_library_to_master_check    
+    m_library_to_master_check  
+
+10. Create the physical master library
+    load 'm_create_physical_master.rb'
+    m_create_physical_master("/media/nollenr-r7e64/master")  
     
