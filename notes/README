@@ -17,8 +17,7 @@
 2a. Mount the music libraries
 	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o user=nollenr,uid=501,gid=502
 	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o user=nollenr,uid=501,gid=502
-
-
+    mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/music /media/nollenr-r7e64/master -o user=nollenr,uid=501,gid=502
 
 3.  Load the methods (in rails console)
     require 'taglib'
@@ -29,12 +28,22 @@
     load 'm_process_libraries.rb'
     load 'm_extension_list.rb'
     load 'm_process_file_specs.rb'
+    load 'm_create_master_library_record.rb'
+    load 'm_create_or_update_master_library.rb'
+    load 'm_library_to_master_check.rb'
 
 
 4.  Create the Library
-    LibraryRoot.create(name: "/media/nollenr-r7e64/music", priority: 1)
-    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE", priority: 2)
-    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER", priority: 3)
+    --LibraryRoot.create(name: "/media/nollenr-r7e64/music", priority: 1)
+    --LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE", priority: 2)
+    --LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER", priority: 3)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/music/AudioBooks", priority: 1)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/music/iTunes Media/Music", priority: 2)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/music/iTunes Music", priority: 3)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/music/Music", priority: 4)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Audiobooks", priority: 5)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/iTunes Media/Music", priority: 6)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Music - DO NOT USE", priority: 7)
     m_process_libraries
 
 5.  Load the extension list (all known extensions in the library) and set the flag to true for files
@@ -54,10 +63,8 @@
     load 'm_library_leaf_records_wo_details.rb'
     
 8.  Load the Master Library (MasterLibraryFile)
-    load 'm_find_fqfn.rb'
-    load 'm_create_master_library_record.rb'
-    load 'm_create_or_update_master_library.rb'
     m_create_or_update_master_library
     
-    
+9.  A quick check that the number of tracks (artist, album, title) in the library is the same as the number in the master
+    m_library_to_master_check    
     

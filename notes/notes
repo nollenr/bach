@@ -8,6 +8,7 @@ Date        Version     Notes
 						select a single track where there exists multiple.
 20141016	v0.1		Added "library_priority" to LibraryFileSpec.
 20141016	v0.1		Change code to include "Priority" on LibraryFileSpec
+20141017	v0.1		Check to be sure all of the titles in the library are in the master library
 
 
 TODO:
@@ -16,3 +17,29 @@ High        			Error logging and messages
 High        			Make all methods loadable and then executable (no execute on load)
 High					Include library priority when selecting a track 
 High					Include update logic for MasterLibraryFile (currently, the method only creates new records).
+High					Include logic to sync master library with what is currently sitting on disk.
+
+
+Three Choices For Music Libraries:
+--------------------------------------
+The problem - iTunes library has a lot of stuff in it (podcasts, apps, along with other sundry items).  The
+              goal is to only include music and audio book items... stuff that I might have on a CD.  This 
+              might need to be expanded to include vidoe in the future, but for now, I'm concerned about
+              music type items.
+Choice 1      Only mount directories that are music related.  The drawback is that I _might_ miss something, 
+              or not see it.
+Choice 2      Mount all directories, but only include directories that have music (LibraryRoot.create)
+Choice 3      Mount all directories, and use a flag on Library to choose which sub-levels to include
+              in the depth-sweep.  
+For now, going with choice 2.
+What I need is choice 3, with an expanding list (like winery location  - us/california/sanoma/)
+
+Postgres Recursive Query
+--------------------------
+WITH RECURSIVE t(parentid, path) AS  -- create a temp table named t
+(
+    SELECT idofparent, name from libraries where id = 3243     -- non-recursive term
+  UNION ALL
+    SELECT idofparent, CAST(libraries.name||'/'||t.path as varchar(255)) FROM libraries,t where libraries.id = t.parentid     -- recursive term
+)
+SELECT * from t  
