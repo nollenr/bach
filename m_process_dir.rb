@@ -1,51 +1,38 @@
-def m_process_dir(p_dir_name, p_parent_id = nil)
-=begin
-  method to recursively read through a given directory
-  structure and parse it into the "Library" model
+def m_process_dir(p_entry, p_path, p_ismaster, p_parent_entry_id = nil)
+  # if p_parent_entry_id is null, then this better be
+  # a directory, specifically a root directory, not a file!
+  puts "Processing directory: #{p_entry}"
+  puts "Processing path: #{p_path}"
   
-  a "top level" directory will not have an "idofparent", 
-  but the "isroot" flag will be set to true.
-
-  files will all have "isleaf" set to true which indicates
-  that it is a file and that there are no children for this
-  library entry.
-
-  unfortunately, empty directories may also be "leafs",
-  but the "isleaf" will not be set for these phenomenon
-=end
-  if p_parent_id.nil?  # This is a "root" level entry
-    myLibItem = Library.new
-    myLibItem.name = p_dir_name
-    myLibItem.isroot = true
-    myLibItem.save
-    v_parent_id = myLibItem.id
-    Dir.chdir(p_dir_name)
-  else
-    v_parent_id = p_parent_id
-  end
-  Dir.foreach(p_dir_name) do |x|
-    next if x.eql? '.' or x.eql? '..' # do not add '.' and '..' to the library
-
-    # The next 3 lines are the same for files and directories
-    myLibItem = Library.new
-    myLibItem.idofparent = v_parent_id
-    myLibItem.name = x
-    if Dir.exists?(x)
-      # puts "  Directory"
-      myLibItem.save
-      Dir.chdir(x) do
-        m_process_dir(Dir.pwd, myLibItem.id) # recursion
-      end
-    elsif File.exists?(x)
-      # puts "  File"
-      myLibItem.isleaf = true
-      myLibItem.save
-    else
-      # TODO: Error processing
-      puts "  Unknown"
+  if Dir.exists?(p_path)
+    # if it is a directory, create a new library record unless one already exists.
+    unless myExistingRec = Library.where(name: p_entry, idofparent: p_parent_entry_id).first
+      puts "     Creating entry in library..."
+      # if p_parent_entry_id is null, the this is a root
+      p_parent_entry_id.nil? ? p_isroot = true : p_isroot = false
+      myExistingRec = Library.create(name: p_entry, idofparent: p_parent_entry_id, isroot: p_isroot, isleaf: false, ismaster: p_ismaster, newlibraryrec: true)
+    end 
+    
+    # now change to that directory, and for each item call this script.
+    Dir.foreach(p_path) do |file_or_dir|
+      puts "     Working on #{file_or_dir}"
+      next if file_or_dir.eql? '.' or file_or_dir.eql? '..'
+      m_process_dir(file_or_dir, p_path + '/' + file_or_dir, p_ismaster, myExistingRec.id) 
     end
+    
+  elsif File.exists?(p_path) # This is a file
+    puts "     Processing file entry in library..."
+    unless myExistingRec = Library.where(name: p_entry, idofparent: p_parent_entry_id).first
+      puts "     Creating file entry in library..."
+      # this is a file, set is leaf to true.
+      myExistingRec = Library.create(name: p_entry, idofparent: p_parent_entry_id, isroot: false, isleaf: true, ismaster: p_ismaster, newlibraryrec: true)
+    end 
+  else
+    # TODO: Error Processing
+    puts "     Neither file nor directory #{p_path} exists"
   end
-  return true
+  
+  return true # what if there was an error?
 end
 
 

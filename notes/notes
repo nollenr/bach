@@ -9,6 +9,9 @@ Date        Version     Notes
 20141016	v0.1		Added "library_priority" to LibraryFileSpec.
 20141016	v0.1		Change code to include "Priority" on LibraryFileSpec
 20141017	v0.1		Check to be sure all of the titles in the library are in the master library
+20141021	v0.1		Changed logic for m_process_dir.  No longer does a chdir; instead also passes the
+						path as part of the definition.
+20141021	v0.1		Included "ismaster" on LibraryRoot and Library.  
 
 
 TODO:
@@ -32,7 +35,29 @@ Choice 2      Mount all directories, but only include directories that have musi
 Choice 3      Mount all directories, and use a flag on Library to choose which sub-levels to include
               in the depth-sweep.  
 For now, going with choice 2.
-What I need is choice 3, with an expanding list (like winery location  - us/california/sanoma/)
+What I would like is choice 3, with an expanding list (like winery location  - us/california/sanoma/)
+
+
+Synching The Master Table with the Master Library
+-------------------------------------------------
+ 1. What if the master table is empty - but the master library is not empty?  
+ 	Then this would seem to be same as a file in the master library not in 
+ 	the master table.
+ 2.	Master Library Empty - but the master table is not empty
+ 	Then this would seem to be the same as a record in the master table
+ 	that needs to be synched to the master library
+ 3. Both Empty
+ 	Same as a new, "fresh" system.  This is already working.
+ 4.	Files in Master Library - Not in Master Table
+ 	The master table needs to be updated.
+ 	Is the file in the library tables?  
+ 	Does it need to be copied over and put into the library and then
+ 	added to the master?  No.  Can't the master be a "library" on it's own?
+ 	Nope.  The master isn't a library... it's for iTunes only.  iTunes
+ 	may mangle the master library.  Don't count on it being a "gold" standard.
+ 5.	Files in the Master Table - Not in the Master Library
+ 	This would seem to be a sub case of a Master Library Populate.  
+
 
 Postgres Recursive Query
 --------------------------

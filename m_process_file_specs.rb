@@ -51,7 +51,8 @@ def m_process_file_specs
       :album => v_hash[:album],     :artist => v_hash[:artist], :comment => v_hash[:comment],
       :genre => v_hash[:genre],     :title => v_hash[:title],   :track => v_hash[:track],
       :year => v_hash[:year],       :length => v_hash[:length], :channels => v_hash[:channels],
-      :bitrate => v_hash[:bitrate], :sample_rate => v_hash[:sample_rate], :file_extension => v_file_extension, :library_priority => v_priority)
+      :bitrate => v_hash[:bitrate], :sample_rate => v_hash[:sample_rate], :file_extension => v_file_extension, 
+      :library_priority => v_priority, :ismaster => myfile.ismaster, :newlibraryrec => myfile.newlibraryrec)
   
   end
 end

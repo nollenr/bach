@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016203718) do
+ActiveRecord::Schema.define(version: 20141022160314) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,11 +29,13 @@ ActiveRecord::Schema.define(version: 20141016203718) do
 
   create_table "libraries", force: true do |t|
     t.integer  "idofparent"
-    t.string   "name",                       null: false
-    t.boolean  "isroot",     default: false, null: false
-    t.boolean  "isleaf",     default: false, null: false
+    t.string   "name",                          null: false
+    t.boolean  "isroot",        default: false, null: false
+    t.boolean  "isleaf",        default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "ismaster",      default: false, null: false
+    t.boolean  "newlibraryrec", default: true,  null: false
   end
 
   create_table "library_file_specs", force: true do |t|
@@ -52,18 +54,24 @@ ActiveRecord::Schema.define(version: 20141016203718) do
     t.integer  "bitrate"
     t.integer  "channels"
     t.integer  "sample_rate"
-    t.string   "file_extension",    null: false
-    t.integer  "library_priority",  null: false
+    t.string   "file_extension",                    null: false
+    t.integer  "library_priority",                  null: false
+    t.boolean  "ismaster",          default: false, null: false
+    t.boolean  "newlibraryrec",     default: true,  null: false
   end
 
+  add_index "library_file_specs", ["artist", "album", "title"], name: "index_library_file_specs_on_artist_and_album_and_title", using: :btree
   add_index "library_file_specs", ["idoflibraryrecord"], name: "index_library_file_specs_on_idoflibraryrecord", unique: true, using: :btree
 
   create_table "library_roots", force: true do |t|
-    t.string   "name",       null: false
-    t.integer  "priority",   null: false
+    t.string   "name",                       null: false
+    t.integer  "priority",                   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "ismaster",   default: false, null: false
   end
+
+  add_index "library_roots", ["name"], name: "index_library_roots_on_name", unique: true, using: :btree
 
   create_table "master_library_files", force: true do |t|
     t.integer  "idoflibraryrecord"
