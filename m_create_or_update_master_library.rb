@@ -1,5 +1,5 @@
 def m_create_or_update_master_library
-  LibraryFileSpec.where(newlibraryrec: true).where(ismaster: false).has_title.title_not_like_track.default_group_by.count.each do |track, num_lib_entries|
+  LibraryFileSpec.where(newlibraryrec: true).has_title.title_not_like_track.default_group_by.count.each do |track, num_lib_entries|
     # puts track.inspect
     v_artist = track[0]
     v_album = track[1]
@@ -35,16 +35,14 @@ def m_create_or_update_master_library
     m_create_master_library_record(myrec)
     myarrayofid = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).ids
     LibraryFileSpec.where(id: myarrayofid).update_all(newlibraryrec: false)
-    Library.where(id: LibraryFileSpec.select("idoflibraryrecord").where(id: myarrayofid)).update_all(newlibraryrec: false)
   end
   
-  LibraryFileSpec.where(newlibraryrec: true).where(ismaster: false).include_unknowns.each do |myrec|
+  LibraryFileSpec.where(newlibraryrec: true).include_unknowns.each do |myrec|
     m_create_master_library_record(myrec)
     myrec.update!(newlibraryrec: false)
-    Library.where(id: myrec.idoflibraryrecord).update_all(newlibraryrec: false)
   end
   
-  LibraryFileSpec.where(newlibraryrec: true).where(ismaster: false).titles_like_track.each do |track, num_lib_entries|
+  LibraryFileSpec.where(newlibraryrec: true).titles_like_track.each do |track, num_lib_entries|
     v_artist = track[0]
     v_album = track[1]
     v_title = track[2]
@@ -52,13 +50,11 @@ def m_create_or_update_master_library
     m_create_master_library_record(myrec)    
     myarrayofid = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).ids
     LibraryFileSpec.where(id: myarrayofid).update_all(newlibraryrec: false)
-    Library.where(id: LibraryFileSpec.select("idoflibraryrecord").where(id: myarrayofid)).update_all(newlibraryrec: false)
   end
   
-  LibraryFileSpec.where(newlibraryrec: true).where(ismaster: false).titles_like_track_no_album.each do |myrec|
+  LibraryFileSpec.where(newlibraryrec: true).titles_like_track_no_album.each do |myrec|
     m_create_master_library_record(myrec)
     myrec.update!(newlibraryrec: false)
-    Library.where(id: myrec.idoflibraryrecord).update_all(newlibraryrec: false)
   end
   
   return true

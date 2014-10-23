@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022160314) do
+ActiveRecord::Schema.define(version: 20141022212034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,13 +29,11 @@ ActiveRecord::Schema.define(version: 20141022160314) do
 
   create_table "libraries", force: true do |t|
     t.integer  "idofparent"
-    t.string   "name",                          null: false
-    t.boolean  "isroot",        default: false, null: false
-    t.boolean  "isleaf",        default: false, null: false
+    t.string   "name",                       null: false
+    t.boolean  "isroot",     default: false, null: false
+    t.boolean  "isleaf",     default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "ismaster",      default: false, null: false
-    t.boolean  "newlibraryrec", default: true,  null: false
   end
 
   create_table "library_file_specs", force: true do |t|
@@ -54,10 +52,9 @@ ActiveRecord::Schema.define(version: 20141022160314) do
     t.integer  "bitrate"
     t.integer  "channels"
     t.integer  "sample_rate"
-    t.string   "file_extension",                    null: false
-    t.integer  "library_priority",                  null: false
-    t.boolean  "ismaster",          default: false, null: false
-    t.boolean  "newlibraryrec",     default: true,  null: false
+    t.string   "file_extension",                   null: false
+    t.integer  "library_priority",                 null: false
+    t.boolean  "newlibraryrec",     default: true, null: false
   end
 
   add_index "library_file_specs", ["artist", "album", "title"], name: "index_library_file_specs_on_artist_and_album_and_title", using: :btree
@@ -93,6 +90,7 @@ ActiveRecord::Schema.define(version: 20141022160314) do
     t.string   "original_directory_location"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "master_directory_location"
   end
 
   add_index "master_library_files", ["artist", "album", "title"], name: "index_master_library_files_on_artist_and_album_and_title", unique: true, using: :btree

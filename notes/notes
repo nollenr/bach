@@ -12,6 +12,12 @@ Date        Version     Notes
 20141021	v0.1		Changed logic for m_process_dir.  No longer does a chdir; instead also passes the
 						path as part of the definition.
 20141021	v0.1		Included "ismaster" on LibraryRoot and Library.  
+20141022	v0.1		Remove "ismaster" from everywhere since master will not be in LibraryRoot
+20141022	v0.1		m_create_physical_master is not copying any tracks with null (artist-album-title)
+						Am I going to put them all in one container (directory) on disk?  What if there is a collision
+						in file names?  For now, they're all going in differenct directories.
+20141022	v0.1		Remove "newlibraryrec" from Library.  Change code in m_create_or_updateMaster_library
+						as well as m_process_dir.  
 
 
 TODO:
@@ -21,6 +27,8 @@ High        			Make all methods loadable and then executable (no execute on load
 High					Include library priority when selecting a track 
 High					Include update logic for MasterLibraryFile (currently, the method only creates new records).
 High					Include logic to sync master library with what is currently sitting on disk.
+
+
 
 
 Three Choices For Music Libraries:
