@@ -25,8 +25,11 @@ Priority    			Task
 High        			Error logging and messages
 High        			Make all methods loadable and then executable (no execute on load)
 High					Include library priority when selecting a track 
-High					Include update logic for MasterLibraryFile (currently, the method only creates new records).
-High					Include logic to sync master library with what is currently sitting on disk.
+Cancel					Include update logic for MasterLibraryFile (currently, the method only creates new records).
+						This is now crosscheck-master
+Cancel					Include logic to sync master library with what is currently sitting on disk.
+						This is now crosscheck-master
+
 
 
 

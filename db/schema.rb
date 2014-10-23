@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022212034) do
+ActiveRecord::Schema.define(version: 20141023162228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,26 @@ ActiveRecord::Schema.define(version: 20141022212034) do
 
   add_index "library_roots", ["name"], name: "index_library_roots_on_name", unique: true, using: :btree
 
+  create_table "log_archives", force: true do |t|
+    t.integer  "run_id"
+    t.integer  "log_message_id"
+    t.string   "process_name"
+    t.string   "log_message_type"
+    t.text     "log_message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "logs", force: true do |t|
+    t.integer  "run_id"
+    t.string   "process_name"
+    t.string   "log_message_type"
+    t.text     "log_message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "log_message_id",   default: "nextval('logs_log_message_id_seq'::regclass)", null: false
+  end
+
   create_table "master_library_files", force: true do |t|
     t.integer  "idoflibraryrecord"
     t.integer  "idoflibaryfilespecrecord"
@@ -94,5 +114,13 @@ ActiveRecord::Schema.define(version: 20141022212034) do
   end
 
   add_index "master_library_files", ["artist", "album", "title"], name: "index_master_library_files_on_artist_and_album_and_title", unique: true, using: :btree
+
+  create_table "runs", force: true do |t|
+    t.string   "process_name"
+    t.datetime "run_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "run_id",       default: "nextval('runs_run_id_seq'::regclass)", null: false
+  end
 
 end

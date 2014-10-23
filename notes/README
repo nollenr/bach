@@ -76,7 +76,7 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Audiobooks", priority: 5)
     LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/iTunes Media/Music", priority: 6)
     LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Music - DO NOT USE", priority: 7)
-    # LibraryRoot.create(name: "/media/nollenr-r7e64/master", priority: 0, ismaster: true)
+    LibraryRoot.create(name: "/media/nollenr-r7e64/master", priority: 0, ismaster: true)
     m_process_libraries
 
 5.  Load the extension list (all known extensions in the library) and set the flag to true for files
@@ -103,4 +103,11 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
 
 10. Create the physical master library
     m_create_physical_master("/media/nollenr-r7e64/master")  
+    
+11.	Crosscheck the master
+	load 'm_crosscheck_master.rb'
+    load 'm_crosscheck_master_sub.rb'
+    load 'm_setup_logging.rb'
+    load 'm_log.rb'
+    m_crosscheck_master
     
