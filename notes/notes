@@ -18,22 +18,33 @@ Date        Version     Notes
 						in file names?  For now, they're all going in differenct directories.
 20141022	v0.1		Remove "newlibraryrec" from Library.  Change code in m_create_or_updateMaster_library
 						as well as m_process_dir.  
-
+Cancel					Include update logic for MasterLibraryFile (currently, the method only creates new records).
+						This is now crosscheck-master
+Cancel					Include logic to sync master library with what is currently sitting on disk.
+						This is now crosscheck-master
+20141024	v0.2		During a crosscheck-master, if I find someting missing on disk, but it still exists
+						in the library, copy it over.  Split into 2.  crosscheck-master is complete, but it 
+						does not do any copying, instead it logs a message for the user to take action.  New
+						todo to make the copying automatic.
+20141024	v0.2		During the crosscheck-master, if I find something new on disk, and it's not in the
+						master library, copy it over to one of the 'libraries'.  But... first, check to be 
+						sure it's not already in one of the libraries, right?
+20141024	v0.2		Add newlibraryrec to MasterLibraryFile and include in create_or_update_master_library
+						(to set it -- defautl is true, I don't think I need to set it) and in 
+						create_phyiscal_master (to select by it and update it to false).
+20141024				Merge to master.
 
 TODO:
 Priority    			Task
 High        			Error logging and messages
 High        			Make all methods loadable and then executable (no execute on load)
-High					Include library priority when selecting a track 
-Cancel					Include update logic for MasterLibraryFile (currently, the method only creates new records).
-						This is now crosscheck-master
-Cancel					Include logic to sync master library with what is currently sitting on disk.
-						This is now crosscheck-master
-High					During a crosscheck-master, if I find someting missing on disk, but it still exists
-						in the library, copy it over.
-High					During the crosscheck-master, if I find something new on disk, and it's not in the
-						master library, copy it over to one of the 'libraries'.  But... first, check to be 
-						sure it's not already in one of the libraries, right?
+Low						Include library priority when selecting a track 
+Low						During crosscheck-master, if something is missing on disk, copy from a library if
+						if it exists.
+Low						During crosscheck-master, if there's something new on disk, copy to a library
+						so that it will be picked up during a crosscheck-library.  It will eventually
+						get cleaned up in the master library on disk when a complete refresh is run.
+
 
 
 

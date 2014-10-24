@@ -24,10 +24,10 @@ def m_crosscheck_master
       # puts "DOES NOT EXIST: #{mlf.artist}-#{mlf.album}-#{mlf.title}"
       if File.exists?(mlf.original_directory_location)
         m_log("crosscheck-master", "Error", "The master record (id:#{mlf.id}) for #{mlf.artist}-#{mlf.album}-#{mlf.title} does not exist in the master library on disk at '#{mlf.master_directory_location}', but does exist in the original library location '#{mlf.original_directory_location}'")
-        puts "File does exist in its original location"
+        # puts "File does exist in its original location"
       else
         m_log("crosscheck-master", "Error", "The master record (id:#{mlf.id}) for #{mlf.artist}-#{mlf.album}-#{mlf.title} does not exist in the master library on disk at '#{mlf.master_directory_location}' and does NOT exist in the original library location '#{mlf.original_directory_location}'")
-        puts "File does NOT exist in its original location"
+        # puts "File does NOT exist in its original location"
       end
     end
   end

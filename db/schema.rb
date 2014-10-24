@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023162228) do
+ActiveRecord::Schema.define(version: 20141024193822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20141023162228) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "master_directory_location"
+    t.boolean  "newlibraryrec",               default: true, null: false
   end
 
   add_index "master_library_files", ["artist", "album", "title"], name: "index_master_library_files_on_artist_and_album_and_title", unique: true, using: :btree

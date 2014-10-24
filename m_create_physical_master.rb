@@ -1,6 +1,6 @@
 def m_create_physical_master(p_root)
   # Why did I choose libraries.name for the filename of the file?
-  MasterLibraryFile.select("master_library_files.*, libraries.name").joins(:library).where.not("artist is null or album is null or title is null").each do |filerec|
+  MasterLibraryFile.select("master_library_files.*, libraries.name").joins(:library).where(newlibraryrec: true).where.not("artist is null or album is null or title is null").each do |filerec|
     puts "Original: #{filerec.original_directory_location}"
     master_file = p_root+'/'+filerec.artist.gsub(/[^0-9A-Za-z ]/, '')+'/'+filerec.album.gsub(/[^0-9A-Za-z ]/, '')+'/'+filerec.name
     puts "  New Location: #{master_file}"
@@ -19,7 +19,7 @@ def m_create_physical_master(p_root)
   same directory (one directory, many files)?
   Currently, each unknown is going into it's own directory 
 =end
-  MasterLibraryFile.select("master_library_files.*, libraries.name, nextval('artist_seq') as artist_seq, nextval('album_seq') as album_seq").joins(:library).where("artist is null or album is null or title is null").each do |filerec|
+  MasterLibraryFile.select("master_library_files.*, libraries.name, nextval('artist_seq') as artist_seq, nextval('album_seq') as album_seq").joins(:library).where(newlibraryrec: true).where("artist is null or album is null or title is null").each do |filerec|
     filerec.artist.nil? ? v_artist = 'artist' + filerec.artist_seq.to_s.rjust(5,'0') : v_artist = filerec.artist
     filerec.album.nil? ? v_album = 'album' + filerec.album_seq.to_s.rjust(5,'0') : v_album = filerec.album
     # title is not actually used in the name

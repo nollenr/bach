@@ -72,7 +72,7 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
 
 
 
-4.  Create the Library
+4.  Create the Library (1:30 for 14,948 records)
     --LibraryRoot.create(name: "/media/nollenr-r7e64/music", priority: 1)
     --LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE", priority: 2)
     --LibraryRoot.create(name: "/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE THIS ONE EITHER", priority: 3)
@@ -87,7 +87,7 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     m_process_libraries
 
 5.  Load the extension list (all known extensions in the library) and set the flag to true for files
-    with a tag.
+    with a tag. (a few seconds)
     m_extension_list
     FileExtension.where(:extension => ['.mp3','.m4p','.m4a','.m4b']).update_all(:process_tag => true)
     FileExtension.where(extension: '.m4a').update_all(sort_order: 1, description: "DRM Free")
@@ -96,36 +96,32 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     FileExtension.where(extension: '.m4b').update_all(description: 'MPEG-4 Audio Book')
     
     
-6.  Populate the Libary File Spec - Get the details of the files I care about from the tag
+6.  Populate the Libary File Spec - Get the details of the files I care about from the tag (5:35 for 11,813 records)
     m_process_file_specs
     
 7.  Check for Library leaf entries that have no details
     load 'm_library_leaf_records_wo_details.rb'
     
-8.  Load the Master Library (MasterLibraryFile) - This is where the important logic sits.
+8.  Load the Master Library (MasterLibraryFile) - This is where the important logic sits. (1:30 for 4,397 records)
     m_create_or_update_master_library
     
 9.  A quick check that the number of tracks (artist, album, title) in the library is the same as the number in the master
     m_library_to_master_check  
 
-10. Create the physical master library
+10. Create the physical master library  (20:00 for 4,397 files)
     m_create_physical_master("/media/nollenr-r7e64/master")  
     
-11.	Crosscheck the master
-	load 'm_crosscheck_master.rb'
-    load 'm_crosscheck_master_sub.rb'
-    load 'm_setup_logging.rb'
-    load 'm_log.rb'
+11.	Crosscheck the master (negligable time)
+	Check to be sure A: All files are still on disk and B: Any new files.
     m_crosscheck_master
+    ** Check the log table for actions you may need to take.  process_name like 'crosscheck%'
 
-12.  Crosscheck the libraries
+12. Crosscheck the libraries (negligable time)
 	LibraryRoot.create(name: "/media/nollenr-r7e64/personal_docs", priority: 8)
-	load 'm_setup_logging.rb'
-	load 'm_log.rb'
-	load 'm_find_fqfn.rb'
-	load 'm_crosscheck_libraries.rb'
-	load 'm_process_dir.rb'
-	m_crosscheck_libraries  
+	m_crosscheck_libraries 
+	m_process_file_specs
+	m_create_or_update_master_library 
+	m_create_physical_master("/media/nollenr-r7e64/master")
 
     Note:  WHen running a test, you might want to delete "sample music/Kalimba.mp3" (directory and file) so that 
     the crosscheck has something new to try and pick up.	  
@@ -133,5 +129,4 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
 Testing Statements:
 MasterLibraryFile.where(artist: 'Diana Krall', album: 'Christmas Songs (iTunes Version)', title: 'White Christmas').count
 MasterLibraryFile.where(artist: 'Diana Krall', album: 'ABC123', title: 'White Christmas').count
-
 MasterLibraryFile.where(artist: 'Hillary Rodham Clinton ', album: 'Living History', title: 'Living History Part 3 of 3').count
