@@ -1,8 +1,9 @@
 def m_create_or_update_master_library
   v_log_process = 'create-or-update-master-library'
   m_setup_logging(v_log_process)
+
   
-  LibraryFileSpec.where(newlibraryrec: true).has_title.title_not_like_track.default_group_by.count.each do |track, num_lib_entries|
+  LibraryFileSpec.where(newlibraryrec: true).has_artist.has_album.has_title.default_group_by.count.each do |track, num_lib_entries|
     # puts track.inspect
     v_artist = track[0]
     v_album = track[1]
@@ -11,7 +12,7 @@ def m_create_or_update_master_library
     # what might have happened is, I've already got a master library and now I'm 
     # adding libraries or new entries to an existing master.  The track may already exist
     # in the master... or it may be new.  Check it before attempting to process it.
-    if MasterLibaryFile.where(artist: v_artist, album: v_album, title: v_title).count == 0
+    if MasterLibraryFile.where(artist: v_artist, album: v_album, title: v_title).count == 0
       m_log(v_log_process, 'Info', "No master records found for #{v_artist}-#{v_album}-#{v_title}.  Creating new master record.") 
       if num_lib_entries == 1
         # puts "One entry found for #{track.inspect}.  Adding to library"
@@ -48,26 +49,12 @@ def m_create_or_update_master_library
     myarrayofid = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title, newlibraryrec: true).ids
     LibraryFileSpec.where(id: myarrayofid).update_all(newlibraryrec: false)
   end
+
   
   LibraryFileSpec.where(newlibraryrec: true).include_unknowns.each do |myrec|
     m_create_master_library_record(myrec)
     myrec.update!(newlibraryrec: false)
   end
-  
-  LibraryFileSpec.where(newlibraryrec: true).titles_like_track.each do |track, num_lib_entries|
-    v_artist = track[0]
-    v_album = track[1]
-    v_title = track[2]
-    myrec = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).first
-    m_create_master_library_record(myrec)    
-    myarrayofid = LibraryFileSpec.where(artist: v_artist, album: v_album, title: v_title).ids
-    LibraryFileSpec.where(id: myarrayofid).update_all(newlibraryrec: false)
-  end
-  
-  LibraryFileSpec.where(newlibraryrec: true).titles_like_track_no_album.each do |myrec|
-    m_create_master_library_record(myrec)
-    myrec.update!(newlibraryrec: false)
-  end
-  
+
   return true
 end

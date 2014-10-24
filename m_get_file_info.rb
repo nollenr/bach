@@ -13,11 +13,11 @@ def m_get_file_info (p_fqfn)
       v_val_hash[:sample_rate] = prop.sample_rate
 
       tag = fileref.tag
-      v_val_hash[:album] =  tag.album.strip
-      v_val_hash[:artist] = tag.artist.strip
-      v_val_hash[:comment] = tag.comment.strip
-      v_val_hash[:genre] = tag.genre.strip
-      v_val_hash[:title] = tag.title.strip
+      tag.album ? v_val_hash[:album] =  tag.album.to_s.strip : v_val_hash[:album] = nil
+      tag.artist ? v_val_hash[:artist] = tag.artist.to_s.strip : v_val_hash[:artist] = nil
+      tag.comment ? v_val_hash[:comment] = tag.comment.to_s.strip : v_val_hash[:comment] = nil
+      tag.genre ? v_val_hash[:genre] = tag.genre.to_s.strip : v_val_hash[:genre] = nil
+      tag.title ? v_val_hash[:title] = tag.title.to_s.strip : v_val_hash[:title] = nil
       v_val_hash[:track] = tag.track
       v_val_hash[:year] = tag.year
     end

@@ -19,6 +19,14 @@ class LibraryFileSpec < ActiveRecord::Base
     where.not(title: nil)
   end
   
+  def self.has_artist
+    where.not(artist: nil)
+  end
+  
+  def self.has_album
+    where.not(album: nil)
+  end
+  
   def self.title_not_like_track
     # where("upper(title) not like 'TRACK%'")
     where.not("upper(title) like 'TRACK%'")
@@ -49,7 +57,7 @@ class LibraryFileSpec < ActiveRecord::Base
   # config item 4                                              #
   ##############################################################
   def self.include_unknowns
-    where(title: nil)
+    where("artist is null or album is null or title is null")
   end
 
   ##############################################################

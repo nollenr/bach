@@ -64,6 +64,12 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     load 'm_create_or_update_master_library.rb'
     load 'm_library_to_master_check.rb'
     load 'm_create_physical_master.rb'
+    load 'm_crosscheck_master.rb'
+    load 'm_crosscheck_master_sub.rb'
+    load 'm_crosscheck_libraries.rb'
+    load 'm_setup_logging.rb'
+    load 'm_log.rb'
+
 
 
 4.  Create the Library
