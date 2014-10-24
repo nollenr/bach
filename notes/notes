@@ -29,7 +29,11 @@ Cancel					Include update logic for MasterLibraryFile (currently, the method onl
 						This is now crosscheck-master
 Cancel					Include logic to sync master library with what is currently sitting on disk.
 						This is now crosscheck-master
-
+High					During a crosscheck-master, if I find someting missing on disk, but it still exists
+						in the library, copy it over.
+High					During the crosscheck-master, if I find something new on disk, and it's not in the
+						master library, copy it over to one of the 'libraries'.  But... first, check to be 
+						sure it's not already in one of the libraries, right?
 
 
 

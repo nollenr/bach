@@ -49,6 +49,7 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
 	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o user=nollenr,uid=501,gid=502
 	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o user=nollenr,uid=501,gid=502
     mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/music /media/nollenr-r7e64/master -o user=nollenr,uid=501,gid=502
+    mount.cifs "//140.198.4.57/Users/nollenr/Documents/MCCC Documents/Ron's Personal Documents/music" /media/nollenr-r7e64/personal_docs -o user=nollenr,uid=501,gid=502
 
 3.  Load the methods (in rails console)
     require 'taglib'
@@ -110,4 +111,21 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     load 'm_setup_logging.rb'
     load 'm_log.rb'
     m_crosscheck_master
+
+12.  Crosscheck the libraries
+	LibraryRoot.create(name: "/media/nollenr-r7e64/personal_docs", priority: 8)
+	load 'm_setup_logging.rb'
+	load 'm_log.rb'
+	load 'm_find_fqfn.rb'
+	load 'm_crosscheck_libraries.rb'
+	load 'm_process_dir.rb'
+	m_crosscheck_libraries  
+
+    Note:  WHen running a test, you might want to delete "sample music/Kalimba.mp3" (directory and file) so that 
+    the crosscheck has something new to try and pick up.	  
     
+Testing Statements:
+MasterLibraryFile.where(artist: 'Diana Krall', album: 'Christmas Songs (iTunes Version)', title: 'White Christmas').count
+MasterLibraryFile.where(artist: 'Diana Krall', album: 'ABC123', title: 'White Christmas').count
+
+MasterLibraryFile.where(artist: 'Hillary Rodham Clinton ', album: 'Living History', title: 'Living History Part 3 of 3').count
