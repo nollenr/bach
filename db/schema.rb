@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024193822) do
+ActiveRecord::Schema.define(version: 20141027221153) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20141024193822) do
   end
 
   create_table "library_file_specs", force: true do |t|
-    t.integer  "idoflibraryrecord"
+    t.integer  "idoflibraryrecord",                 null: false
     t.integer  "filesizeinmb"
     t.string   "artist"
     t.string   "album"
@@ -52,9 +52,10 @@ ActiveRecord::Schema.define(version: 20141024193822) do
     t.integer  "bitrate"
     t.integer  "channels"
     t.integer  "sample_rate"
-    t.string   "file_extension",                   null: false
-    t.integer  "library_priority",                 null: false
-    t.boolean  "newlibraryrec",     default: true, null: false
+    t.string   "file_extension",                    null: false
+    t.integer  "library_priority",                  null: false
+    t.boolean  "newlibraryrec",     default: true,  null: false
+    t.boolean  "isitunes",          default: false, null: false
   end
 
   add_index "library_file_specs", ["artist", "album", "title"], name: "index_library_file_specs_on_artist_and_album_and_title", using: :btree
@@ -66,6 +67,7 @@ ActiveRecord::Schema.define(version: 20141024193822) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "ismaster",   default: false, null: false
+    t.boolean  "isitunes",   default: false, null: false
   end
 
   add_index "library_roots", ["name"], name: "index_library_roots_on_name", unique: true, using: :btree

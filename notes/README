@@ -1,17 +1,17 @@
 Workflow:
 
 A.  Load EVERYTHING from disk in to the "Library".  You tell me the all the roots (LibraryRoot) and 
-	I'll walk through all files and load them into the "Library": duplicates, all file types, everything.
+    I'll walk through all files and load them into the "Library": duplicates, all file types, everything.
 
-B.	Create/Update the file extension list of all known file extensions from the "Library".  You tell 
-	me, which extensions need to be processed from the "Library" by setting a flag in the table.  For 
-	example, I'm not going to process ".jpeg" files since they don't contain a media type I'm 
-	interested in.  Remember, this is basically to help manage "music" files.
+B.  Create/Update the file extension list of all known file extensions from the "Library".  You tell 
+    me, which extensions need to be processed from the "Library" by setting a flag in the table.  For 
+    example, I'm not going to process ".jpeg" files since they don't contain a media type I'm 
+    interested in.  Remember, this is basically to help manage "music" files.
 
 C.  I'll walk through the "Library" looking only at files with the extensions you told me
-	to process (in step B) and then extract the tag info from the file.  I'll place all of 
-	the detail into "LibraryFileSpec".  You might want to make sure that I didn't miss 
-	any important files from the "Library"
+    to process (in step B) and then extract the tag info from the file.  I'll place all of 
+    the detail into "LibraryFileSpec".  You might want to make sure that I didn't miss 
+    any important files from the "Library"
 
 D.	Create the "MasterLibraryFile"... this will dedup (and attempt to pick the "best" copy)
 	and create the List of Files to be written to disk and given to iTunes to process.  
@@ -46,10 +46,13 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     rake db:migrate
     
 2a. Mount the music libraries
-	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o user=nollenr,uid=501,gid=502
-	mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o user=nollenr,uid=501,gid=502
-    mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/music /media/nollenr-r7e64/master -o user=nollenr,uid=501,gid=502
-    mount.cifs "//140.198.4.57/Users/nollenr/Documents/MCCC Documents/Ron's Personal Documents/music" /media/nollenr-r7e64/personal_docs -o user=nollenr,uid=501,gid=502
+    export USER=nollenr
+    export PASSWD='#putpasswordhere'
+    mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o uid=501,gid=502
+    mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o uid=501,gid=502
+    mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/music /media/nollenr-r7e64/master -o uid=501,gid=502
+    mount.cifs "//140.198.4.57/Users/nollenr/Documents/MCCC Documents/Ron's Personal Documents/music" /media/nollenr-r7e64/personal_docs -o uid=501,gid=502
+    mount.cifs "//140.198.4.57/Users/nollenr/Music/iTunes" /media/nollenr-r7e64/myitunes -o uid=501,gid=502
 
 3.  Load the methods (in rails console)
     require 'taglib'
@@ -67,6 +70,7 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     load 'm_crosscheck_master.rb'
     load 'm_crosscheck_master_sub.rb'
     load 'm_crosscheck_libraries.rb'
+    load 'm_crosscheck_itunes.rb'
     load 'm_setup_logging.rb'
     load 'm_log.rb'
 
@@ -111,20 +115,33 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
 10. Create the physical master library  (20:00 for 4,397 files)
     m_create_physical_master("/media/nollenr-r7e64/master")  
     
-11.	Crosscheck the master (negligable time)
-	Check to be sure A: All files are still on disk and B: Any new files.
+11. Crosscheck the master (negligable time)
+    Check to be sure A: All files are still on disk and B: Any new files.
     m_crosscheck_master
     ** Check the log table for actions you may need to take.  process_name like 'crosscheck%'
 
 12. Crosscheck the libraries (negligable time)
-	LibraryRoot.create(name: "/media/nollenr-r7e64/personal_docs", priority: 8)
-	m_crosscheck_libraries 
-	m_process_file_specs
-	m_create_or_update_master_library 
-	m_create_physical_master("/media/nollenr-r7e64/master")
+    LibraryRoot.create(name: "/media/nollenr-r7e64/personal_docs", priority: 8)
+    m_crosscheck_libraries 
+    m_process_file_specs
+    m_create_or_update_master_library 
+    m_create_physical_master("/media/nollenr-r7e64/master")
 
     Note:  WHen running a test, you might want to delete "sample music/Kalimba.mp3" (directory and file) so that 
     the crosscheck has something new to try and pick up.	  
+
+13. Crosscheck the iTunes library
+    LibraryRoot.create(name: "/media/nollenr-r7e64/myitunes", priority: 99, isitunes: true)
+    m_process_dir("/media/nollenr-r7e64/myitunes", "/media/nollenr-r7e64/myitunes")
+    m_process_file_specs
+    m_crosscheck_itunes
+    
+    testing m_prune_tree
+    0.  LibraryFileSpec.where(isitunes: true).delete_all
+    1.  Library.where(name: '/media/nollenr-r7e64/myitunes')
+    2.  load 'm_prune_tree.rb'
+    2.  m_prune_tree(15437, 15437)
+    
     
 Testing Statements:
 MasterLibraryFile.where(artist: 'Diana Krall', album: 'Christmas Songs (iTunes Version)', title: 'White Christmas').count

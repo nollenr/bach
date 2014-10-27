@@ -8,6 +8,7 @@ def m_process_file_specs
     temphash = Hash.new
     temphash[:priority] = rootrec.priority
     temphash[:dirarray] = Pathname(rootrec.name).each_filename.to_a
+    temphash[:isitunes] = rootrec.isitunes
     rootrecarray.push(temphash)
   end
   # puts rootrecarray.inspect
@@ -35,12 +36,18 @@ def m_process_file_specs
     file_fqfn = m_find_fqfn(myfile)
     
     v_priority = nil
+    v_isitunes = nil
     rootrecarray.each do |rootrec|
       # file_fqfn contains rootrec
       # puts rootrec[:dirarray].inspect
       # puts Pathname(file_fqfn).each_filename.to_a.inspect
+      # Take all of the "pieces" of the root directory and make an array out of it -- alread done above
+      # Then, make an array out of the "pieces" of my currentl directory.
+      # "AND" the root directory pieces and the current directory pieces.  If the resulting array
+      # is the same as the root array, then this path is from the root directory.
       next unless (rootrec[:dirarray] & Pathname(file_fqfn).each_filename.to_a == rootrec[:dirarray])
       v_priority = rootrec[:priority]
+      v_isitunes = rootrec[:isitunes]
       break
     end
     
@@ -52,7 +59,7 @@ def m_process_file_specs
       :genre => v_hash[:genre],     :title => v_hash[:title],   :track => v_hash[:track],
       :year => v_hash[:year],       :length => v_hash[:length], :channels => v_hash[:channels],
       :bitrate => v_hash[:bitrate], :sample_rate => v_hash[:sample_rate], :file_extension => v_file_extension, 
-      :library_priority => v_priority, :newlibraryrec => true)
+      :library_priority => v_priority, :newlibraryrec => true, :isitunes => v_isitunes)
   
   end
 end
