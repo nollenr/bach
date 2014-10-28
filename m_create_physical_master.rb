@@ -1,4 +1,5 @@
 def m_create_physical_master(p_root)
+  
   # Why did I choose libraries.name for the filename of the file?
   MasterLibraryFile.select("master_library_files.*, libraries.name").joins(:library).where(newlibraryrec: true).where.not("artist is null or album is null or title is null").each do |filerec|
     puts "Original: #{filerec.original_directory_location}"
@@ -32,4 +33,5 @@ def m_create_physical_master(p_root)
     MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file)
   end
   return true
+
 end

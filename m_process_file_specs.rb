@@ -1,4 +1,5 @@
 def m_process_file_specs
+  
   ext_hash = Hash.new
   FileExtension.all.map{|x| ext_hash[x.extension] = x.process_tag}
   

@@ -3,7 +3,7 @@ def m_crosscheck_libraries
   m_setup_logging(v_log_process)
 =begin
   A.  Go through all of the libraries and make sure the files are 
-      still on disk like there are supposed to be.
+      still on disk like they are supposed to be.
   B.  Go through all of the disk files in the different libraries
       and be sure there is an entry in the library for it. 
 =end
@@ -14,7 +14,7 @@ def m_crosscheck_libraries
     end
   end # End Library.where
   
-  LibraryRoot.where(ismaster: false).each do |rootrec|
+  LibraryRoot.where(ismaster: false, isitunes: false).each do |rootrec|
     m_process_dir(rootrec.name, rootrec.name, nil, true)
   end
   
