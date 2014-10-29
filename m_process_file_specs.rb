@@ -1,4 +1,10 @@
-def m_process_file_specs
+def m_process_file_specs(p_update_mode=false)
+  
+  if p_update_mode
+    v_process_name = 'process_file_specs::update'
+    m_setup_logging(v_process_name)
+  end
+  
   
   ext_hash = Hash.new
   FileExtension.all.map{|x| ext_hash[x.extension] = x.process_tag}
@@ -54,6 +60,10 @@ def m_process_file_specs
     
     # puts "The priority of #{myfile.name} is #{v_priority}"
   
+    if p_update_mode
+      m_log(v_process_name, 'Info', "Creating a new entry for '#{file_fqfn} in the LibraryFileSpec model.")
+    end
+    
     v_hash = m_get_file_info(file_fqfn)
     myLFS = LibraryFileSpec.create(    :idoflibraryrecord => myfile.id, :filesizeinmb => v_hash[:file_size],
       :album => v_hash[:album],     :artist => v_hash[:artist], :comment => v_hash[:comment],

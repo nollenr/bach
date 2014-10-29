@@ -1,5 +1,8 @@
 Workflow:
 
+iTunes: How to re-create your iTunes library and playlists
+http://support.apple.com/kb/HT1451
+
 A.  Load EVERYTHING from disk in to the "Library".  You tell me the all the roots (LibraryRoot) and 
     I'll walk through all files and load them into the "Library": duplicates, all file types, everything.
 
@@ -13,19 +16,25 @@ C.  I'll walk through the "Library" looking only at files with the extensions yo
     the detail into "LibraryFileSpec".  You might want to make sure that I didn't miss 
     any important files from the "Library"
 
-D.	Create the "MasterLibraryFile"... this will dedup (and attempt to pick the "best" copy)
-	and create the List of Files to be written to disk and given to iTunes to process.  
-	The de-dup is by "artist-album-title" with special care given to files that 
-	do not contain one of those attributes.  In fact, any "track" that is missing one or
-	more of "artist-album-title" will not be de-duped.
+D.  Create the "MasterLibraryFile"... this will dedup (and attempt to pick the "best" copy)
+    and create the List of Files to be written to disk and given to iTunes to process.  
+    The de-dup is by "artist-album-title" with special care given to files that 
+    do not contain one of those attributes.  In fact, any "track" that is missing one or
+    more of "artist-album-title" will not be de-duped.
 
 E.  Copy files from the various LibraryRoot locations to the Master Library Location based 
-	on the "MasterLibraryFile".  
+    on the "MasterLibraryFile".
+
+F.  Although the same mount point can be used for several libraries (for example, an Audiobook
+    and a music library might be under the same mount), the master mount
+    and the iTunes mount MUST be different from all other mounts.  This is to accomodate determining
+    if the library "isitunes", or "ismaster" without having to have the designation on
+    the library.
 
 0.  In order for the copy-to-master step to work, windows needs a little tweek:
-	http://boinst.wordpress.com/2012/03/20/mount-cifs-cannot-allocate-memory-mounting-windows-share/
-	Set the following paramter to "3" in regedit.
-	HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters\Size
+    http://boinst.wordpress.com/2012/03/20/mount-cifs-cannot-allocate-memory-mounting-windows-share/
+    Set the following paramter to "3" in regedit.
+    HKLM\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters\Size
 	
 	In order to get iTunes to "add a folder" to the library, you may need to hit the "alt" key to bring up the menu.
 
@@ -144,20 +153,19 @@ The stuff below gets run over and over and over
     B.looks at all root records, and runs the m_process_dir on them
       which should populate the library with any records not already there.  The process is careful
       not to create duplicate records... and will only create records when it finds a "new" entry on disk
-      TODO:  make sure this isn't looking at itunes or master library entries
     ** Check the log table for actions.  process_name like 'crosscheck%'
     m_crosscheck_libraries
     
     The next step will create file specs only for new files by checking to see if the Library id is
-      in the library file specs table (as idoflibraryrecord)
+    in the library file specs table (as idoflibraryrecord)
     TODO:  Process file specs doesn't record anything.  It really should report on updated info!
-    m_process_file_specs
+    m_process_file_specs(true)
     
     **Check the log table for actions.  process_name like "create-or-update-master-library"
     m_create_or_update_master_library
 
-    TODO:  m_create_physical_master doesn't log anything and it should.   
-    m_create_physical_master("/media/nollenr-r7e64/master")
+    myMaster = LibraryRoot.where(ismaster: true).first
+    m_create_physical_master(myMaster.name, true)  
 
     Note:  WHen running a test, you might want to delete "sample music/Kalimba.mp3" (directory and file) so that 
     the crosscheck has something new to try and pick up.	  

@@ -1,4 +1,10 @@
-def m_create_physical_master(p_root)
+def m_create_physical_master(p_root, p_update_mode = false)
+  
+  if p_update_mode
+    v_process_name = 'create_physical_master'
+    m_setup_logging(v_process_name)
+  end
+  
   
   # Why did I choose libraries.name for the filename of the file?
   MasterLibraryFile.select("master_library_files.*, libraries.name").joins(:library).where(newlibraryrec: true).where.not("artist is null or album is null or title is null").each do |filerec|
@@ -7,6 +13,7 @@ def m_create_physical_master(p_root)
     puts "  New Location: #{master_file}"
     FileUtils.mkdir_p(File.dirname(master_file))
     FileUtils.copy_file(filerec.original_directory_location, master_file)
+    m_log(v_process_name, 'Info', "Creating new physical master file #{master_file}") if p_update_mode
     MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file, newlibraryrec: false)
   end  
 =begin
@@ -30,6 +37,7 @@ def m_create_physical_master(p_root)
     puts "  New Location: #{master_file}"
     FileUtils.mkdir_p(File.dirname(master_file))
     FileUtils.copy_file(filerec.original_directory_location, master_file)
+    m_log(v_process_name, 'Info', "Creating new physical master file #{master_file}") if p_update_mode
     MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file, newlibraryrec: false)
   end
   return true

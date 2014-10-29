@@ -11,13 +11,13 @@ music008  C:/Users/gregNron/Music/Other Music
 master    C:\Users\gregNron\Music\Master
 
 export USER="admin"
-export PASSWD='!dOrothysArah#'
+export PASSWD='Admin Password for the Drive'
 mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/iTunes Media/Music" /media/nollenr-r7e64/music001 -o uid=501,gid=502
 mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/Music" /media/nollenr-r7e64/music002 -o uid=501,gid=502
 mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/iTunes Music" /media/nollenr-r7e64/music003 -o user=admin,uid=501,gid=502
 
 export USER="gregNron"
-export PASSWD='SarahDorothy!*'
+export PASSWD='Password For the Desktop'
 mount.cifs "//192.168.1.138/Users/gregNron/Music/Amazon Music" /media/nollenr-r7e64/music004/ -o user=gregNron,uid=501,gid=502
 mount.cifs "//192.168.1.138/Users/gregNron/Music/iTunes - DO NOT USE/iTunes Media/Music" /media/nollenr-r7e64/music005/ -o user=gregNron,uid=501,gid=502
 mount.cifs "//192.168.1.138/Users/gregNron/Music/iTunes - DO NOT USE/Music - DO NOT USE" /media/nollenr-r7e64/music006/ -o user=gregNron,uid=501,gid=502

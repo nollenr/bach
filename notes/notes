@@ -38,6 +38,14 @@ Cancel                  Include logic to sync master library with what is curren
                         Put iTunes files in the LibraryFileSpecs (m_process_file_specs)
                         Check for anything in LFS that IS itunes that doesn't exist in another
 			Library (except for master)
+20141028    v0.3        Delete itunes library info.  Delete from LFS/Library.
+20141029    v0.3        m_crosscheck_libraries - be sure it isn't picking up itunes nor master
+                        libraries when checking to see if something is missing.
+20141029    v0.3        m_prune_tree log doesn't have a run id assoicated with it.
+20141029    v0.3        m_process_file_specs will now create log entries if it is being run
+                        in "udpate mode" -- which is triggered by sending a "true" into the
+                        method when it is called.  False is the default.
+20141029    v0.3        m_create_physical_master logs updates.
 
 
 TODO:
@@ -50,7 +58,10 @@ Low                     During crosscheck-master, if something is missing on dis
 Low                     During crosscheck-master, if there's something new on disk, copy to a library
                         so that it will be picked up during a crosscheck-library.  It will eventually
                         get cleaned up in the master library on disk when a complete refresh is run.
-High                    Delete itunes library info.  Delete from LFS/Library.
+Meduim			Change all logging.  I should be able to get the process name automatically
+                        by sending in the name of the method which is currently executing.  Is this
+			what I want, tho?
+
 
 
 Three Choices For Music Libraries:
