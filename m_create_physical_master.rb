@@ -7,7 +7,7 @@ def m_create_physical_master(p_root)
     puts "  New Location: #{master_file}"
     FileUtils.mkdir_p(File.dirname(master_file))
     FileUtils.copy_file(filerec.original_directory_location, master_file)
-    MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file)
+    MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file, newlibraryrec: false)
   end  
 =begin
     if not File.identical?(filerec.original_directory_location, master_file)
@@ -30,7 +30,7 @@ def m_create_physical_master(p_root)
     puts "  New Location: #{master_file}"
     FileUtils.mkdir_p(File.dirname(master_file))
     FileUtils.copy_file(filerec.original_directory_location, master_file)
-    MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file)
+    MasterLibraryFile.where(id: filerec.id).update_all(master_directory_location: master_file, newlibraryrec: false)
   end
   return true
 

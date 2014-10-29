@@ -51,7 +51,8 @@ E.  Copy files from the various LibraryRoot locations to the Master Library Loca
     iTunes - The iTunes directory.  Need to check this in later steps to be sure nothing has been
     downloaded or added to that directory.
     export USER=nollenr
-    export PASSWD='Sh1rl1e!*'
+    export PASSWD=''
+    http://unix.stackexchange.com/questions/2998/how-do-i-mount-a-wd-mybook-world-network-drive-in-linux
     mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Music /media/nollenr-r7e64/music/ -o uid=501,gid=502
     mount.cifs //140.198.4.57/Users/nollenr/Documents/MCCC\ Drop\ Box/Dropbox/Temp\ Music /media/nollenr-r7e64/temp_music/ -o uid=501,gid=502
     mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/music /media/nollenr-r7e64/master -o uid=501,gid=502
@@ -166,7 +167,8 @@ The stuff below gets run over and over and over
     LibraryFileSpec and then cleans up afterword.
     **Check the log table for actions.  process_name like "crosscheck-itunes"
     m_crosscheck_itunes
-    m_crosschech_itunes_cleanup
+    
+    m_crosscheck_itunes_cleanup
     
     testing m_prune_tree
     0.  LibraryFileSpec.where(isitunes: true).delete_all

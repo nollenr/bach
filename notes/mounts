@@ -1,0 +1,38 @@
+https://www.samba.org/samba/docs/man/manpages-3/mount.cifs.8.html
+
+music001  I:/Shared Music/iTunes/iTunes Media/Music
+music002  I:/Shared Music/iTunes/Music
+music003  I:/Shared Music/iTunes/iTunes Music
+music004  C:/Users/gregNron/Music/Amazon Music
+music005  C:/Users/gregNron/Music/iTunes - DO NOT USE/iTunes Media/Music
+music006  C:/Users/gregNron/Music/iTunes - DO NOT USE/Music - DO NOT USE
+music007  C:/Users/gregNron/Music/iTunes - DO NOT USE/Audiobooks
+music008  C:/Users/gregNron/Music/Other Music
+master    C:\Users\gregNron\Music\Master
+
+export USER="admin"
+export PASSWD='!dOrothysArah#'
+mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/iTunes Media/Music" /media/nollenr-r7e64/music001 -o uid=501,gid=502
+mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/Music" /media/nollenr-r7e64/music002 -o uid=501,gid=502
+mount.cifs "//192.168.1.130/Public/Shared Music/iTunes/iTunes Music" /media/nollenr-r7e64/music003 -o user=admin,uid=501,gid=502
+
+export USER="gregNron"
+export PASSWD='SarahDorothy!*'
+mount.cifs "//192.168.1.138/Users/gregNron/Music/Amazon Music" /media/nollenr-r7e64/music004/ -o user=gregNron,uid=501,gid=502
+mount.cifs "//192.168.1.138/Users/gregNron/Music/iTunes - DO NOT USE/iTunes Media/Music" /media/nollenr-r7e64/music005/ -o user=gregNron,uid=501,gid=502
+mount.cifs "//192.168.1.138/Users/gregNron/Music/iTunes - DO NOT USE/Music - DO NOT USE" /media/nollenr-r7e64/music006/ -o user=gregNron,uid=501,gid=502
+mount.cifs "//192.168.1.138/Users/gregNron/Music/iTunes - DO NOT USE/Audiobooks" /media/nollenr-r7e64/music007/ -o user=gregNron,uid=501,gid=502
+mount.cifs "//192.168.1.138/Users/gregNron/Music/Other Music" /media/nollenr-r7e64/music008/ -o user=gregNron,uid=501,gid=502
+mount.cifs "//192.168.1.138/Users/gregNron/Music/Master" /media/nollenr-r7e64/master/ -o user=gregNron,uid=501,gid=502
+
+
+LibraryRoot.create(name: "/media/nollenr-r7e64/music001", priority: 1)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music002", priority: 2)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music003", priority: 3)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music004", priority: 4)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music005", priority: 5)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music006", priority: 6)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music007", priority: 7)
+LibraryRoot.create(name: "/media/nollenr-r7e64/music008", priority: 8)
+LibraryRoot.create(name: "/media/nollenr-r7e64/master",   priority: 0, ismaster: true)
+
