@@ -46,12 +46,11 @@ Cancel                  Include logic to sync master library with what is curren
                         in "udpate mode" -- which is triggered by sending a "true" into the
                         method when it is called.  False is the default.
 20141029    v0.3        m_create_physical_master logs updates.
-
+20141030    classify    Make all methods loadable and then executable (no execute on load)
 
 TODO:
 Priority                Task
-High                    Error logging and messages
-High                    Make all methods loadable and then executable (no execute on load)
+In Process              Error logging and messages
 Low                     Include library priority when selecting a track 
 Low                     During crosscheck-master, if something is missing on disk, copy from a library if
                         if it exists.
@@ -61,7 +60,7 @@ Low                     During crosscheck-master, if there's something new on di
 Meduim			Change all logging.  I should be able to get the process name automatically
                         by sending in the name of the method which is currently executing.  Is this
 			what I want, tho?
-
+High			Create foreign keys for the MasterLibraryFile-PlaylistSongs-Playlist models.
 
 
 Three Choices For Music Libraries:

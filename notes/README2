@@ -1,0 +1,42 @@
+
+Mount for the playlist to write to:
+  [WORK]
+  export USER="nollenr"
+  export PASSWD=''
+  mount.cifs //140.198.4.57/Users/nollenr/Documents/temp/playlists /media/nollenr-r7e64/playlists -o uid=501,gid=502
+  LibraryRoot.create(name: "/media/nollenr-r7e64/playlists", windows_name: 'C:\Users\nollenr\Documents\temp\playlists', priority: 100, isplaylist: true)
+
+  [HOME]
+  export USER="gregNron"
+  export PASSWD=''
+  mount.cifs
+  LibraryRoot.create(name: "", windows_name: '', priority: 100, isplaylist: true)
+
+
+  require 'csv'
+  load 'm_write_playlist.rb'
+  load 'm_windows_fqfn.rb'
+  
+
+
+=======================================================================
+Super Important Documentation for has_many, through
+http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
+
+
+pl = Playlist.find(1)            # find a playlist
+mlf = MasterLibraryFile.find(27) # find a song
+pl.master_library_files << mlf   # associate the playlist and song
+
+Be SUPER CAREFUL with this one... it replaces all existing
+  associations (delete and insert)
+pl.master_library_file_ids=[2,3,4]
+
+Be SUPER CAREFUL with this one too... it replaces all existing
+pl.master_library_files=[MasterLibraryFile.find(33), MasterLibraryFile.find(34)]
+
+This adds the additional associations
+pl.master_library_files.push [MasterLibraryFile.find(100), MasterLibraryFile.find(101), MasterLibraryFile.find(102)]
+
+
+

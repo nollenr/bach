@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027221153) do
+ActiveRecord::Schema.define(version: 20141031191426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,12 +62,14 @@ ActiveRecord::Schema.define(version: 20141027221153) do
   add_index "library_file_specs", ["idoflibraryrecord"], name: "index_library_file_specs_on_idoflibraryrecord", unique: true, using: :btree
 
   create_table "library_roots", force: true do |t|
-    t.string   "name",                       null: false
-    t.integer  "priority",                   null: false
+    t.string   "name",                         null: false
+    t.integer  "priority",                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "ismaster",   default: false, null: false
-    t.boolean  "isitunes",   default: false, null: false
+    t.boolean  "ismaster",     default: false, null: false
+    t.boolean  "isitunes",     default: false, null: false
+    t.string   "windows_name",                 null: false
+    t.boolean  "isplaylist",   default: false
   end
 
   add_index "library_roots", ["name"], name: "index_library_roots_on_name", unique: true, using: :btree
@@ -117,6 +119,19 @@ ActiveRecord::Schema.define(version: 20141027221153) do
   end
 
   add_index "master_library_files", ["artist", "album", "title"], name: "index_master_library_files_on_artist_and_album_and_title", unique: true, using: :btree
+
+  create_table "playlist_songs", force: true do |t|
+    t.integer  "playlist_id"
+    t.integer  "master_library_file_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "playlists", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "runs", force: true do |t|
     t.string   "process_name"

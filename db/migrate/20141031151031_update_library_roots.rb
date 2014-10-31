@@ -1,0 +1,22 @@
+class UpdateLibraryRoots < ActiveRecord::Migration
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music/AudioBooks').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music/iTunes Media/Music').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music/iTunes Music').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music/Music').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Audiobooks').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Temp Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/iTunes Media/Music').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Temp Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/temp_music/iTunes - DO NOT USE/Music - DO NOT USE').update_all(windows_name: 'C:\Users\nollenr\Documents\MCCC Drop Box\Dropbox\Temp Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/master').update_all(windows_name: 'C:\Users\nollenr\Documents\temp\music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/myitunes').update_all(windows_name: 'C:\Users\nollenr\Music\iTunes', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/personal_docs').update_all(windows_name: "C:\\Users\\nollenr\\Documents\\MCCC Documents\\Ron's Personal Documents", isplaylist: false)
+
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music001').update_all(windows_name: 'I:\Shared Music\iTunes\iTunes Media\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music002').update_all(windows_name: 'I:\Shared Music\iTunes\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music003').update_all(windows_name: 'I:\Shared Music\iTunes\iTunes Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music004').update_all(windows_name: 'C:\Users\gregNron\Music\Amazon Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music005').update_all(windows_name: 'C:\Users\gregNron\Music\iTunes - DO NOT USE\iTunes Media\Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music006').update_all(windows_name: 'C:\Users\gregNron\Music\iTunes - DO NOT USE\Music - DO NOT USE', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music007').update_all(windows_name: 'C:\Users\gregNron\Music\iTunes - DO NOT USE\Audiobooks', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/music008').update_all(windows_name: 'C:\Users\gregNron\Music\Other Music', isplaylist: false)
+    LibraryRoot.where(name: '/media/nollenr-r7e64/master').update_all(windows_name:   'C:\Users\gregNron\Music\Master', isplaylist: false)
+end
