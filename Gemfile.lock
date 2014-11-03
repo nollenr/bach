@@ -122,6 +122,8 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
+    turbolinks (2.4.0)
+      coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
@@ -149,4 +151,5 @@ DEPENDENCIES
   simple_form (~> 3.0.2)
   taglib-ruby (= 0.4.0)
   therubyracer (~> 0.12.1)
+  turbolinks
   uglifier (~> 2.5.3)

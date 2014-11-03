@@ -1,0 +1,19 @@
+<h1>All Master Library Files</h1>
+
+<ul class="MasterLibraryFiles">
+  <% @mlfs.each do |mlf| %>
+    <li>
+      <%= mlf.artist %> -
+      <%= mlf.album %> -
+      <%= mlf.title %>
+    </li>
+  <% end %>
+</ul>
+
+<ul class="Playlists">
+  <% @pls.each do |pl| %>
+    <li>
+      <%= pl.name%>
+    </li>
+  <% end %>
+</ul>

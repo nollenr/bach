@@ -39,4 +39,5 @@ gem 'ransack', '~> 1.4.1'
 gem 'kaminari', '~> 0.16.1'
 gem 'simple_form', '~> 3.0.2'
 gem 'taglib-ruby', '0.4.0'
+gem 'turbolinks'
 
