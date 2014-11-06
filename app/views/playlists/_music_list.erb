@@ -1,0 +1,9 @@
+
+  <% @musicbygenrehash.each_key do |genreitem| %>
+    <h2><a href="#"><%= genreitem %></a></h2>
+    <div>
+    <% @musicbygenrehash[genreitem].each do |gih| %>
+      <li><%= gih.artist %></li>
+    <% end %>
+    </div>
+  <% end %>

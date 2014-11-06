@@ -61,6 +61,7 @@ Meduim			Change all logging.  I should be able to get the process name automatic
                         by sending in the name of the method which is currently executing.  Is this
 			what I want, tho?
 High			Create foreign keys for the MasterLibraryFile-PlaylistSongs-Playlist models.
+High                    Playlist name not null.
 
 
 Three Choices For Music Libraries:

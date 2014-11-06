@@ -9,7 +9,7 @@ Mount for the playlist to write to:
   [HOME]
   export USER="gregNron"
   export PASSWD=''
-  mount.cifs
+  mount.cifs -- where am I going to store playlists
   LibraryRoot.create(name: "", windows_name: '', priority: 100, isplaylist: true)
 
 
@@ -23,6 +23,18 @@ Mount for the playlist to write to:
 Super Important Documentation for has_many, through
 http://api.rubyonrails.org/classes/ActiveRecord/Associations/ClassMethods.html
 
+Nested Form Example
+http://stackoverflow.com/questions/13506735/rails-has-many-through-nested-form
+
+Strong Parameters
+http://edgeguides.rubyonrails.org/action_controller_overview.html#strong-parameters
+http://patshaughnessy.net/2014/6/16/a-rule-of-thumb-for-strong-parameters
+
+jquery-ui
+http://jqueryui.com/accordion/#fillspace
+
+=======================================================================
+Examples of creating has many through database rows in the console
 
 pl = Playlist.find(1)            # find a playlist
 mlf = MasterLibraryFile.find(27) # find a song
