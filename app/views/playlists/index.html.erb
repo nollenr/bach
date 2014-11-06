@@ -34,7 +34,7 @@
 </div>
    
 <div id="cart">
-  <h1 class="ui-widget-header">Shopping Cart</h1>
+  <h1 id="cart-header" class="ui-widget-header">Shopping Cart</h1>
   <div class="ui-widget-content">
     <ol>
       <li class="placeholder">Add your items here</li>
@@ -42,4 +42,4 @@
   </div>
 </div>
 
-
+<%= link_to('MyButton', update_cart_path, remote: true, class: 'btn btn-primary') %>

@@ -1,0 +1,2 @@
+<% myvar= Playlist.pluck(:name).first %>
+$("#cart-header").text("<%= escape_javascript(myvar)%>");

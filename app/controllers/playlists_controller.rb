@@ -5,10 +5,10 @@ class PlaylistsController < ApplicationController
   # GET /playlists.json
   def index
     @playlists = Playlist.all
-    @mlfs = MasterLibraryFile.order("artist", "album", "title").all
+    # @mlfs = MasterLibraryFile.where("artist is not null and album is not null and title is not null").order("artist", "album", "title").all
     @musicbygenrehash = Hash.new
     MasterLibraryFile.select(:genre).group(:genre).each do |genre_list|
-      @musicbygenrehash[genre_list.genre] = MasterLibraryFile.select(:artist, :album, :title).where(genre: genre_list.genre)
+      @musicbygenrehash[genre_list.genre] = MasterLibraryFile.select(:id, :artist, :album, :title).where(genre: genre_list.genre).where("artist is not null and album is not null and title is not null").order(:artist, :album, :title)
     end
   end
 
@@ -63,6 +63,13 @@ class PlaylistsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to playlists_url, notice: 'Playlist was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  # Testing Ajax Functionality
+  def update_cart
+    respond_to do |format|
+      format.js
     end
   end
 

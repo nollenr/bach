@@ -13,14 +13,20 @@
     $( "#catalog li" ).draggable({
       appendTo: "body",
       helper: "clone"
+      //drag: function(event, ui){
+      //  console.log(this.id);
+      //}
     });
     $( "#cart ol" ).droppable({
       activeClass: "ui-state-default",
       hoverClass: "ui-state-hover",
       accept: ":not(.ui-sortable-helper)",
       drop: function( event, ui ) {
+        console.log( $(ui.draggable).attr('id') );
+        var liID = $(ui.draggable).attr('id');
+        console.log(liID);
         $( this ).find( ".placeholder" ).remove();
-        $( "<li></li>" ).text( ui.draggable.text() ).appendTo( this );
+        $( "<li></li>" ).text( ui.draggable.text() ).attr('id', $(ui.draggable).attr('id') ).appendTo( this );
       }
     }).sortable({
       items: "li:not(.placeholder)",

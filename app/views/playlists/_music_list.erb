@@ -3,7 +3,7 @@
     <h2><a href="#"><%= genreitem %></a></h2>
     <div>
     <% @musicbygenrehash[genreitem].each do |gih| %>
-      <li><%= gih.artist %></li>
+      <li id="<%= (genreitem.nil?  ? "nilgenre" : genreitem) + '-' + gih.id.to_s %>"><%= gih.artist %></li>
     <% end %>
     </div>
   <% end %>

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'master_library_file/index'
   resources :playlists
+  
+  # For the Ajax Button... telling it controller/action to execute for me
+  get "/update_cart" => 'playlists#update_cart'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

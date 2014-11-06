@@ -23,15 +23,17 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
-group :assets do
-  gem 'bootstrap-sass', '~> 3.2.0.2'
+# Assets
+  gem 'bootstrap-sass', '~> 3.3.0'
   # Use SCSS for stylesheets
   gem 'sass-rails',   '~> 4.0.3'
+  # add browser vendor prefixes automatically / recommended by bootstrap-sass
+  gem 'autoprefixer-rails'
   # Use CoffeeScript for .js.coffee assets and views
   gem 'coffee-rails', '~> 4.1'
   # Use Uglifier as compressor for JavaScript assets
   gem 'uglifier', '~> 2.5.3'
-end
+
 
 gem 'annotate', '~> 2.6.5'
 gem 'bcrypt', '~> 3.1.7'
