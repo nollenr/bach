@@ -36,4 +36,20 @@
         $( this ).removeClass( "ui-state-default" );
       }
     });
+    $("#cart").click(function(event){
+      var musiclistArray = [];
+      //get the list of music items added to the playlist
+      $("#cart ol li").each(function(index) {  
+        var idArray = this.id.split("-");
+        var indexArray = [index, Number(idArray[1])];
+        console.log(index.toString() + " " + this.id + " " + idArray[1].toString());
+        console.log(indexArray);
+        musiclistArray.push(indexArray);
+        console.log(musiclistArray);
+      });
+      console.log("clicked on cart");
+      $.post( 
+        "/update_cart", { playlist: { id: 16, musiclist: musiclistArray } }
+      );
+    });
   });

@@ -68,6 +68,17 @@ class PlaylistsController < ApplicationController
   
   # Testing Ajax Functionality
   def update_cart
+    @musiclist = params[:playlist][:musiclist]
+    logger.debug(@musiclist)
+    PlaylistSong.where(playlist_id: playlist_params[:id]).delete_all
+    #playlist_params[:musiclist].each do |mlf_id|
+    #  logger.debug("Inserting position: " + mlf_id[0].to_s + " id: " + mlf_id[1].to_s + " into PlaylistSong")
+    #  PlaylistSong.create(playlist_id: playlist_params[:id], playlist_order: mlf_id[0], master_library_file_id: mlf_id[1])
+    #end
+    @musiclist.each do |key, mlitem|
+      logger.debug("Inserting position: " + mlitem[0].to_s + " id: " + mlitem[1].to_s)
+      PlaylistSong.create(playlist_id: playlist_params[:id], playlist_order: mlitem[0], master_library_file_id: mlitem[1] )
+    end
     respond_to do |format|
       format.js
     end
@@ -83,6 +94,6 @@ class PlaylistsController < ApplicationController
     def playlist_params
       # This also works and is more intuitive for me.
       # params[:playlist].permit(:name)
-      params.require(:playlist).permit(:name)
+      params.require(:playlist).permit(:id, :name)
     end
 end

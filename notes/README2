@@ -52,5 +52,15 @@ pl.master_library_files=[MasterLibraryFile.find(33), MasterLibraryFile.find(34)]
 This adds the additional associations
 pl.master_library_files.push [MasterLibraryFile.find(100), MasterLibraryFile.find(101), MasterLibraryFile.find(102)]
 
+jquery .ajax
+http://www.tutorialspoint.com/jquery/ajax-jquery-ajax.htm
+=======================================================================
+A step forward in my progress
+
+what I want, is when I click my button to do an
+$.ajax({url: 'url', type: 'post', data: {player: { name: "test', room_id: '0' } } })
+actually, .post is probably "more" correct in this case... it's a convenience method.
+
+
 
 
