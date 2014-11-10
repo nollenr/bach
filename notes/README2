@@ -16,7 +16,7 @@ Mount for the playlist to write to:
   require 'csv'
   load 'm_write_playlist.rb'
   load 'm_windows_fqfn.rb'
-  
+  m_write_playlist('playlist02')
 
 
 =======================================================================
@@ -60,7 +60,9 @@ A step forward in my progress
 what I want, is when I click my button to do an
 $.ajax({url: 'url', type: 'post', data: {player: { name: "test', room_id: '0' } } })
 actually, .post is probably "more" correct in this case... it's a convenience method.
-
+=======================================================================
+A current view of the parameters coming in:
+Parameters: {"playlist"=>{"id"=>"16", "musiclist"=>{"0"=>["0", "3501"], "1"=>["1", "733"]}}}
 
 
 

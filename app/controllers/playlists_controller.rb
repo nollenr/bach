@@ -68,16 +68,19 @@ class PlaylistsController < ApplicationController
   
   # Testing Ajax Functionality
   def update_cart
-    @musiclist = params[:playlist][:musiclist]
+    # Need to do a complete refresh of a playlist everytime.
+    # The playlist could have items added, deleted or re-arranged.
+    @musiclist = params[:playlist][:playlist_songs_attributes]
     logger.debug(@musiclist)
     PlaylistSong.where(playlist_id: playlist_params[:id]).delete_all
-    #playlist_params[:musiclist].each do |mlf_id|
-    #  logger.debug("Inserting position: " + mlf_id[0].to_s + " id: " + mlf_id[1].to_s + " into PlaylistSong")
-    #  PlaylistSong.create(playlist_id: playlist_params[:id], playlist_order: mlf_id[0], master_library_file_id: mlf_id[1])
-    #end
     @musiclist.each do |key, mlitem|
-      logger.debug("Inserting position: " + mlitem[0].to_s + " id: " + mlitem[1].to_s)
-      PlaylistSong.create(playlist_id: playlist_params[:id], playlist_order: mlitem[0], master_library_file_id: mlitem[1] )
+      logger.debug("mlitem")
+      logger.debug(mlitem.inspect)
+      logger.debug("Inserting position: " + mlitem["playlist_order"].to_s + " id: " + mlitem["master_library_file_id"].to_s)
+      PlaylistSong.create(
+        playlist_id: playlist_params[:id],
+        playlist_order: mlitem["playlist_order"],
+        master_library_file_id: mlitem["master_library_file_id"] )
     end
     respond_to do |format|
       format.js
@@ -94,6 +97,16 @@ class PlaylistsController < ApplicationController
     def playlist_params
       # This also works and is more intuitive for me.
       # params[:playlist].permit(:name)
-      params.require(:playlist).permit(:id, :name)
+      # Example of Parameters:
+        # {"playlist"=>
+        #   {"id"=>"16",
+        #    "playlist_songs_attributes"=>
+        #       {"0"=>{"playlist_order"=>"0", "master_library_file_id"=>"133"},
+        #        "1"=>{"playlist_order"=>"1", "master_library_file_id"=>"762"},
+        #        "2"=>{"playlist_order"=>"2", "master_library_file_id"=>"671"}
+        #       }
+        #   }
+        # }
+      params.require(:playlist).permit(:id, :name, {:playlist_songs_attributes => [:playlist_order, :master_library_file_id]})
     end
 end
