@@ -3,21 +3,21 @@
       minHeight: 420,
       minWidth: 200,
       resize: function() {
-        $( "#catalog" ).accordion( "refresh" );
+        $( "#music-list" ).accordion( "refresh" );
       }
     });
-    $( "#catalog" ).accordion({
+    $( "#music-list" ).accordion({
       heightStyle: "fill",
       collapsible: true
     });
-    $( "#catalog li" ).draggable({
+    $( "#music-list li" ).draggable({
       appendTo: "body",
       helper: "clone"
       //drag: function(event, ui){
       //  console.log(this.id);
       //}
     });
-    $( "#cart ol" ).droppable({
+    $( "#playlist01 ol" ).droppable({
       activeClass: "ui-state-default",
       hoverClass: "ui-state-hover",
       accept: ":not(.ui-sortable-helper)",
@@ -36,12 +36,13 @@
         $( this ).removeClass( "ui-state-default" );
       }
     });
-    $("#cart").click(function(event){
+    // move this to something else other than the header :-/
+    $("#playlist01").click(function(event){
       var masterArray = [];
       var masterHash = {};
      
       //get the list of music items added to the playlist
-      $("#cart ol li").each(function(index) {  
+      $("#playlist01 ol li").each(function(index) {  
          var musiclistHash = {};
          var idArray = this.id.split("-");
         // var indexArray = [index, Number(idArray[1])];
@@ -60,4 +61,5 @@
         "/update_cart", { playlist: { id: 16, playlist_songs_attributes: masterArray }}
       );
     });
+    $("#testcombo").combobox();
   });
