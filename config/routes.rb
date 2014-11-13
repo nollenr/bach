@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # get "/update_cart" => 'playlists#update_cart'
   # post "/update_cart" => 'playlists#update_cart'
   match "/update_cart" => 'playlists#update_cart', via: [:get, :post]
+  
+  get 'countries.json' => 'playlists#countries'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

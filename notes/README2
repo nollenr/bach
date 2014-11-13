@@ -35,6 +35,9 @@ http://jqueryui.com/accordion/#fillspace
 
 Rails 4 AJAX
 https://coderwall.com/p/kqb3xq/rails-4-how-to-partials-ajax-dead-easy
+
+twitter-typeahead
+http://twitter.github.io/typeahead.js/examples/#remote
 =======================================================================
 Examples of creating has many through database rows in the console
 
@@ -54,6 +57,9 @@ pl.master_library_files.push [MasterLibraryFile.find(100), MasterLibraryFile.fin
 
 jquery .ajax
 http://www.tutorialspoint.com/jquery/ajax-jquery-ajax.htm
+
+Bloodhound (API, Methods, and Options)
+https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md#bloodhoundclearremotecache
 =======================================================================
 A step forward in my progress
 
@@ -63,6 +69,18 @@ actually, .post is probably "more" correct in this case... it's a convenience me
 =======================================================================
 A current view of the parameters coming in:
 Parameters: {"playlist"=>{"id"=>"16", "musiclist"=>{"0"=>["0", "3501"], "1"=>["1", "733"]}}}
+=======================================================================
+Getting rails to servce up a static page of JSON data
+I had to create a route:
+  get 'countries.json' => 'playlists#countries'
+  (an this is what was in the javascript:  url: 'countries.json')
+  
+  then in the contoller, I sucked the data into a var and then
+  submitted that var to the javascript
 
+  def countries
+    @@data = File.read("countries.json")
+    render :json => @@data
+  end
 
 

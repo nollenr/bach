@@ -42,4 +42,5 @@ gem 'kaminari', '~> 0.16.1'
 gem 'simple_form', '~> 3.0.2'
 gem 'taglib-ruby', '0.4.0'
 gem 'turbolinks'
+gem 'twitter-typeahead-rails', '~> 0.10'
 

@@ -25,6 +25,13 @@ class PlaylistsController < ApplicationController
   # GET /playlists/1/edit
   def edit
   end
+  
+  def countries
+    # @@data = File.read("countries.json")
+    # render :json => @@data
+    @playlist = Playlist.all.pluck(:name)
+    render :json => @playlist
+  end
 
   # POST /playlists
   # POST /playlists.json
