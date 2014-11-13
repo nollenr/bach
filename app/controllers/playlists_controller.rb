@@ -29,7 +29,7 @@ class PlaylistsController < ApplicationController
   def countries
     # @@data = File.read("countries.json")
     # render :json => @@data
-    @playlist = Playlist.all.pluck(:name)
+    @playlist = Playlist.all.pluck(:id, :name)
     render :json => @playlist
   end
 

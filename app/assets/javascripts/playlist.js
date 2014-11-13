@@ -64,7 +64,9 @@
     
     //twitter-typeahead basic example
     var countries = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+      datumTokenizer: function(datum) {
+        return Bloodhound.tokenizers.whitespace(datum.name);
+      },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       limit: 10,
       prefetch: {
@@ -74,8 +76,10 @@
         // the json file contains an array of strings, but the Bloodhound
         // suggestion engine expects JavaScript objects so this converts all of
         // those strings
+
         filter: function(list) {
-          return $.map(list, function(country) { return { name: country }; });
+          //console.log("and the list is...", list)
+          return $.map(list, function(playlistarry) { return { id: playlistarry[0], name: playlistarry[1] }; });
         }
       }
     });
@@ -91,7 +95,15 @@
     displayKey: 'name',
     // `ttAdapter` wraps the suggestion engine in an adapter that
     // is compatible with the typeahead jQuery plugin
-    source: countries.ttAdapter()
+    source: countries.ttAdapter(),
+    updater: function(item) {
+      console.log("item is: ", item);
+    }
+  });
+  
+  $('#prefetch').bind('typeahead:selected', function(obj, datum, name){
+    console.log("selected datum: ", datum);
+    console.log("selected name: ", name);
   });
  
 });

@@ -58,8 +58,20 @@ pl.master_library_files.push [MasterLibraryFile.find(100), MasterLibraryFile.fin
 jquery .ajax
 http://www.tutorialspoint.com/jquery/ajax-jquery-ajax.htm
 
-Bloodhound (API, Methods, and Options)
+Bloodhound (API -- Methods and Options)
 https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md#bloodhoundclearremotecache
+
+Typeahead (API -- Methods and Options)
+https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md
+
+JSON Objects and the Twitter Typeahead
+http://tatiyants.com/how-to-use-json-objects-with-twitter-bootstrap-typeahead/
+
+JSON Objects and Twitter Bloodhound
+http://stackoverflow.com/questions/24560108/typeahead-v0-10-2-bloodhound-working-with-nested-json-objects
+
+Twitter Typeahead Selected Event
+https://github.com/twitter/typeahead.js/issues/300
 =======================================================================
 A step forward in my progress
 
