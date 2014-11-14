@@ -5,32 +5,39 @@
     
     <!-- this is my music list -->
     <div class="col-md-6">
-      <h1 class="ui-widget-header">Music List By Genre</h1>
-      <div id="accordion-resizer" class="ui-widget-content">
-        <div id="music-list">
-          <%= render 'music_list' %>
-        </div>
-      </div>
+      <h1>Music List By Genre</h1>
     </div> <!-- end col -->
     
-    <!-- this is my playlist -->
+    <!-- this is my playlist header-->
     <div class="col-md-6">
-      <div id="playlist01" >
-        <h1 id="cart-header" class="ui-widget-header">PlayList</h1>
-        <div class="ui-widget-content">
-          <ol>
-            <li class="placeholder">Add your items here</li>
-          </ol>
+        <div id="prefetch">
+          <h1><input id="pl1" class="typeahead" type="text" placeholder="Playlist"></h1>
+          <input id="pl1ID" type="hidden">
         </div>
-      </div>
     </div> <!-- end col -->
     
   </div> <!-- end row -->
+
   <div class="row">
-    <%= link_to('MyButton', update_cart_path, remote: true, class: 'btn btn-primary') %>
-  </div>
+
+    <div class="col-md-6">
+      <div class="ui-widget-header">
+        <div id="accordion-resizer" class="ui-widget-content">
+          <div id="music-list">
+            <%= render 'music_list' %>
+          </div>
+        </div>   <!-- accordion-resizer/ui-widget-content -->
+      </div> <!-- ui-widget-header -->
+    </div> <!-- end col -->
+
+    <div class="col-md-6">
+      <div id="playlist01-contents" class=ui-widget-header>
+        <div class="ui-widget-content">
+          <ol> <li class="placeholder">Add your items here</li> </ol>
+        </div>  <!-- end ui-widget-content -->
+      </div> <!-- ui-widget-header -->
+    </div>  <!-- end col -->
+
+  </div>  <!-- end row -->
 </div>
   
-<div id="prefetch">
-  <input class="typeahead" type="text" placeholder="Countries">
-</div>

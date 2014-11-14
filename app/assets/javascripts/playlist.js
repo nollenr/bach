@@ -17,7 +17,7 @@
       //  console.log(this.id);
       //}
     });
-    $( "#playlist01 ol" ).droppable({
+    $( "#playlist01-contents ol" ).droppable({
       activeClass: "ui-state-default",
       hoverClass: "ui-state-hover",
       accept: ":not(.ui-sortable-helper)",
@@ -37,33 +37,34 @@
       }
     });
     // move this to something else other than the header :-/
-    $("#playlist01").click(function(event){
-      var masterArray = [];
-      var masterHash = {};
-     
-      //get the list of music items added to the playlist
-      $("#playlist01 ol li").each(function(index) {  
-         var musiclistHash = {};
-         var idArray = this.id.split("-");
-        // var indexArray = [index, Number(idArray[1])];
-        console.log(index.toString() + " " + this.id + " " + idArray[1].toString());
-        // console.log(indexArray);
-        // musiclistArray.push(indexArray);
-        // console.log(musiclistArray);
-        musiclistHash['playlist_order'] = index;
-        musiclistHash['master_library_file_id'] = idArray[1];
-        masterArray.push(musiclistHash);
-      });
-      console.log("clicked on cart");
-      console.log("MasterArray:");
-      console.log(masterArray);
-      $.post( 
-        "/update_cart", { playlist: { id: 16, playlist_songs_attributes: masterArray }}
-      );
-    });
+    // This is the working section of the Model updates.
+    //$("#playlist01").click(function(event){
+    //  var masterArray = [];
+    //  var masterHash = {};
+    // 
+    //  //get the list of music items added to the playlist
+    //  $("#playlist01 ol li").each(function(index) {  
+    //     var musiclistHash = {};
+    //     var idArray = this.id.split("-");
+    //    // var indexArray = [index, Number(idArray[1])];
+    //    console.log(index.toString() + " " + this.id + " " + idArray[1].toString());
+    //    // console.log(indexArray);
+    //    // musiclistArray.push(indexArray);
+    //    // console.log(musiclistArray);
+    //    musiclistHash['playlist_order'] = index;
+    //    musiclistHash['master_library_file_id'] = idArray[1];
+    //    masterArray.push(musiclistHash);
+    //  });
+    //  console.log("clicked on cart");
+    //  console.log("MasterArray:");
+    //  console.log(masterArray);
+    //  $.post( 
+    //    "/update_cart", { playlist: { id: 16, playlist_songs_attributes: masterArray }}
+    //  );
+    //});
     
     //twitter-typeahead basic example
-    var countries = new Bloodhound({
+    var v_playlists = new Bloodhound({
       datumTokenizer: function(datum) {
         return Bloodhound.tokenizers.whitespace(datum.name);
       },
@@ -72,7 +73,7 @@
       prefetch: {
         // url points to a json file that contains an array of country names, see
         // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
-        url: 'countries.json',
+        url: 'jsonplaylist',
         // the json file contains an array of strings, but the Bloodhound
         // suggestion engine expects JavaScript objects so this converts all of
         // those strings
@@ -85,25 +86,46 @@
     });
  
   // kicks off the loading/processing of `local` and `prefetch`
-  countries.clearPrefetchCache();
-  countries.initialize();
-  console.log(" Countries: ");
-  console.log(countries);
+  v_playlists.clearPrefetchCache();
+  v_playlists.initialize();
+  var indexOfSelection;
  
   $('#prefetch .typeahead').typeahead(null, {
-    name: 'countries',
+    name: 'playlists',
     displayKey: 'name',
     // `ttAdapter` wraps the suggestion engine in an adapter that
     // is compatible with the typeahead jQuery plugin
-    source: countries.ttAdapter(),
-    updater: function(item) {
-      console.log("item is: ", item);
-    }
-  });
+    source: v_playlists.ttAdapter()
+  }).blur(function(){
+      indexOfSelection = -1;
+      console.log("...bluring...", v_playlists.index.datums);
+      if (valueInList(this.value, v_playlists.index.datums)){
+        console.log("if valueInList is true", v_playlists.index.datums[indexOfSelection].id, v_playlists.index.datums[indexOfSelection].name);
+        document.getElementById("pl1ID").value=v_playlists.index.datums[indexOfSelection].id;
+      }
+      else {
+        console.log("if valueInList is false");
+        document.getElementById("pl1ID").value=null;
+      }
+    });
   
-  $('#prefetch').bind('typeahead:selected', function(obj, datum, name){
-    console.log("selected datum: ", datum);
-    console.log("selected name: ", name);
-  });
- 
+  // checks an array of hashes (objects) to see if "value" is in the list of names.
+  function valueInList(value, arry){
+    return arry.some(function(anObj, index){ indexOfSelection = index; return anObj.name === value; });
+  }
+  
+  //$('#prefetch .typeahead').on("typeahead:selected typeahead:autocompleted", function(obj, datum, name) {
+  //    console.log("typeahead custom event firing", datum.id);
+  //});
+  
+  //$('#prefetch .typeahead').bind('typeahead:selected', function(obj, datum, name){
+  //  console.log("selected datum: ", datum);
+  //  console.log("selected name: ", name);
+  //});
+  //
+  //  $('#prefetch .typeahead').bind('typeahead:autocompleted', function(obj, datum, name){
+  //  console.log("autocompleted datum: ", datum);
+  //  console.log("autocompleted name: ", name);
+  //});
+  
 });

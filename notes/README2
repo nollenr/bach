@@ -72,6 +72,8 @@ http://stackoverflow.com/questions/24560108/typeahead-v0-10-2-bloodhound-working
 
 Twitter Typeahead Selected Event
 https://github.com/twitter/typeahead.js/issues/300
+
+Notes:  Just to be clear, a datum is a Javascript object.
 =======================================================================
 A step forward in my progress
 
