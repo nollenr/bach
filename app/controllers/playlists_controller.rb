@@ -7,8 +7,8 @@ class PlaylistsController < ApplicationController
     @playlists = Playlist.all
     # @mlfs = MasterLibraryFile.where("artist is not null and album is not null and title is not null").order("artist", "album", "title").all
     @musicbygenrehash = Hash.new
-    MasterLibraryFile.select(:genre).group(:genre).each do |genre_list|
-      @musicbygenrehash[genre_list.genre] = MasterLibraryFile.select(:id, :artist, :album, :title).where(genre: genre_list.genre).where("artist is not null and album is not null and title is not null").order(:artist, :album, :title)
+    MasterLibraryFile.select("genre as genre, coalesce(genre, 'Unknown Genre') as genre_display").group(:genre).each do |genre_list|
+      @musicbygenrehash[genre_list.genre_display] = MasterLibraryFile.select(:id, :artist, :album, :title).where(genre: genre_list.genre).where("artist is not null and album is not null and title is not null").order(:artist, :album, :title)
     end
   end
 
@@ -73,22 +73,46 @@ class PlaylistsController < ApplicationController
     end
   end
   
-  # Testing Ajax Functionality
+  # Many-To-Many Through Playlist_songs 
   def update_cart
     # Need to do a complete refresh of a playlist everytime.
     # The playlist could have items added, deleted or re-arranged.
+    # Does the playlist id exist?  If not, create it, if it does, delete all the playlist songs
+    # Difference between id being null and id not being found in the playlists?
+    # If the parameter "id" is null, should I check the name of the playlist to be sure it's not there?
+    #  or can I rely on my GUI to ensure that is true for me?
+    #  I'm not going to check to see if the playlist id can be found.  If it comes in the parameter list,
+    #  then it is in the Playlist table, if not, then I'll assume the playlist name doesn't exist.  
+    if params[:playlist][:id].empty?
+      logger.debug("Creating new playlist")
+      v_new_playlist = Playlist.new
+      v_new_playlist.name = params[:playlist][:name]
+      v_new_playlist.save!
+      v_playlist_id = v_new_playlist.id
+    else
+      logger.debug("param[id] is NOT empty")
+      v_playlist_id = params[:playlist][:id]
+    end
+    
     @musiclist = params[:playlist][:playlist_songs_attributes]
     logger.debug(@musiclist)
-    PlaylistSong.where(playlist_id: playlist_params[:id]).delete_all
+    PlaylistSong.where(playlist_id: v_playlist_id).delete_all
     @musiclist.each do |key, mlitem|
       logger.debug("mlitem")
       logger.debug(mlitem.inspect)
       logger.debug("Inserting position: " + mlitem["playlist_order"].to_s + " id: " + mlitem["master_library_file_id"].to_s)
       PlaylistSong.create(
-        playlist_id: playlist_params[:id],
+        playlist_id: v_playlist_id,
         playlist_order: mlitem["playlist_order"],
         master_library_file_id: mlitem["master_library_file_id"] )
     end
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def get_playlist_songs
+    @playlist_songs = PlaylistSong.select("playlist_songs.*, master_library_files.title, master_library_files.genre").joins(:master_library_file).where(playlist_id: params[:id])
     respond_to do |format|
       format.js
     end

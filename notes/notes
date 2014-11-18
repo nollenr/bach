@@ -62,6 +62,9 @@ Meduim			Change all logging.  I should be able to get the process name automatic
 			what I want, tho?
 High			Create foreign keys for the MasterLibraryFile-PlaylistSongs-Playlist models.
 High                    Playlist name not null.
+High			ON the view, the app auto-creates a <ol><li>"Placeholder"</li></ol>.  Be
+                        sure that's not what I'm trying to insert in to the table.
+High			Create a unique index on playlist.name
 
 
 Three Choices For Music Libraries:

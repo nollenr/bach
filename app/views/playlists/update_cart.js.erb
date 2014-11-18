@@ -1,3 +1,8 @@
 // Testing javascript -- this can be removed
 // <% myvar= Playlist.pluck(:name).first %>
 // $("#cart-header").text("<%= escape_javascript(myvar)%>");
+  console.log("............Attempting to clear the cache and reinitialize the typeahead list");
+  v_playlists.clear();
+//  v_playlists.clearPrefetchCache();
+  v_playlists.clearRemoteCache();
+  v_playlists.initialize(true);

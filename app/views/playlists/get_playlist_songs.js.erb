@@ -1,0 +1,4 @@
+ <% if !@playlist_songs.empty? %>
+   $("#playlist01-ol").empty();
+   $("#playlist01-ol").html("<%= escape_javascript(render partial: 'get_playlist_songs', locals: {playlist_songs: @playlist_songs} ) %>");
+ <% end %>  

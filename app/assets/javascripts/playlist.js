@@ -36,32 +36,34 @@
         $( this ).removeClass( "ui-state-default" );
       }
     });
-    // move this to something else other than the header :-/
+
     // This is the working section of the Model updates.
-    //$("#playlist01").click(function(event){
-    //  var masterArray = [];
-    //  var masterHash = {};
-    // 
-    //  //get the list of music items added to the playlist
-    //  $("#playlist01 ol li").each(function(index) {  
-    //     var musiclistHash = {};
-    //     var idArray = this.id.split("-");
-    //    // var indexArray = [index, Number(idArray[1])];
-    //    console.log(index.toString() + " " + this.id + " " + idArray[1].toString());
-    //    // console.log(indexArray);
-    //    // musiclistArray.push(indexArray);
-    //    // console.log(musiclistArray);
-    //    musiclistHash['playlist_order'] = index;
-    //    musiclistHash['master_library_file_id'] = idArray[1];
-    //    masterArray.push(musiclistHash);
-    //  });
-    //  console.log("clicked on cart");
-    //  console.log("MasterArray:");
-    //  console.log(masterArray);
-    //  $.post( 
-    //    "/update_cart", { playlist: { id: 16, playlist_songs_attributes: masterArray }}
-    //  );
-    //});
+    $("#updatePlaylist01").click(function(event){
+      var masterArray = [];
+      var masterHash = {};
+      var v_playlistName = $("#pl1").val();
+      var v_playlistID = $("#pl1ID").val();
+      console.log("Playlist: ", v_playlistName, "  Playlist Id:", v_playlistID);
+     
+      //get the list of music items added to the playlist
+      $("#playlist01-contents ol li").each(function(index) {  
+         var musiclistHash = {};
+         var idArray = this.id.split("-");
+        // var indexArray = [index, Number(idArray[1])];
+        console.log(index.toString() + " " + this.id + " " + idArray[1].toString());
+        // console.log(indexArray);
+        // musiclistArray.push(indexArray);
+        // console.log(musiclistArray);
+        musiclistHash['playlist_order'] = index;
+        musiclistHash['master_library_file_id'] = idArray[1];
+        masterArray.push(musiclistHash);
+      });
+      console.log("MasterArray:");
+      console.log(masterArray);
+      $.post( 
+        "/update_cart", { playlist: { id: v_playlistID, name: v_playlistName, playlist_songs_attributes: masterArray }}
+      );
+    });
     
     //twitter-typeahead basic example
     var v_playlists = new Bloodhound({
@@ -69,7 +71,7 @@
         return Bloodhound.tokenizers.whitespace(datum.name);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-      limit: 10,
+      limit: 5000,
       prefetch: {
         // url points to a json file that contains an array of country names, see
         // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
@@ -82,7 +84,7 @@
           //console.log("and the list is...", list)
           return $.map(list, function(playlistarry) { return { id: playlistarry[0], name: playlistarry[1] }; });
         }
-      }
+      } 
     });
  
   // kicks off the loading/processing of `local` and `prefetch`
@@ -102,10 +104,15 @@
       if (valueInList(this.value, v_playlists.index.datums)){
         console.log("if valueInList is true", v_playlists.index.datums[indexOfSelection].id, v_playlists.index.datums[indexOfSelection].name);
         document.getElementById("pl1ID").value=v_playlists.index.datums[indexOfSelection].id;
+        // must go get the current list (in order)
+        $.get("/get_playlist_songs", {id: v_playlists.index.datums[indexOfSelection].id});
       }
       else {
         console.log("if valueInList is false");
         document.getElementById("pl1ID").value=null;
+        // must clear out the current list
+        $("#playlist01-ol").empty();
+        $("#playlist01-ol").html('<li class="placeholder">Add your items here</li>');
       }
     });
   
