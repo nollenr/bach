@@ -80,6 +80,10 @@ Twitter Typeahead minLength is 0
 https://github.com/twitter/typeahead.js/pull/719
 
 Notes:  Just to be clear, a datum is a Javascript object.
+
+jQuery Autocomplete:
+Example using "data"
+https://stackoverflow.com/questions/3188157/how-to-set-up-jquery-ui-autocomplete-in-rails/20917114#20917114
 =======================================================================
 Getting rails to servce up a static page of JSON data
 I had to create a route:
@@ -93,5 +97,8 @@ I had to create a route:
     @@data = File.read("countries.json")
     render :json => @@data
   end
+=======================================================================
+Sidebar
 
-
+http://www.bootply.com/90936
+http://www.bootply.com/101100

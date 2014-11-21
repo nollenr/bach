@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'jsonplaylist' => 'playlists#jsonplaylist'
   
   get '/get_playlist_songs' => 'playlists#get_playlist_songs'
+  
+  get '/get_music_list' => 'playlists#get_music_list'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -6,9 +6,12 @@ class PlaylistsController < ApplicationController
   def index
     @playlists = Playlist.all
     # @mlfs = MasterLibraryFile.where("artist is not null and album is not null and title is not null").order("artist", "album", "title").all
-    @musicbygenrehash = Hash.new
-    MasterLibraryFile.select("genre as genre, coalesce(genre, 'Unknown Genre') as genre_display").group(:genre).each do |genre_list|
-      @musicbygenrehash[genre_list.genre_display] = MasterLibraryFile.select(:id, :artist, :album, :title).where(genre: genre_list.genre).where("artist is not null and album is not null and title is not null").order(:artist, :album, :title)
+    @musicGrouped = Hash.new
+    # MasterLibraryFile.select("genre as genre, coalesce(genre, 'Unknown Genre') as genre_display").group(:genre).each do |genre_list|
+    #  @musicGrouped[genre_list.genre_display] = MasterLibraryFile.select(:id, :artist, :album, :title).where(genre: genre_list.genre).where("artist is not null and album is not null and title is not null").order(:artist, :album, :title)
+    # end
+    MasterLibraryFile.select("artist as artist, coalesce(artist, 'Unknown Artist') as artist_display").where("substr(artist,1,1) between 'A' and 'C'").group(:artist).order(:artist).each do |artist_list|
+      @musicGrouped[artist_list.artist_display] = MasterLibraryFile.select(:id, "coalesce(artist, 'Unknown Artist') as artist", "coalesce(album, 'Unknown Album') as album", "coalesce(title, 'Unknown Title') as title").where(artist: artist_list.artist).order(:artist, :title)
     end
   end
 
@@ -29,8 +32,17 @@ class PlaylistsController < ApplicationController
   def jsonplaylist
     # @@data = File.read("countries.json")
     # render :json => @@data
-    @playlist = Playlist.all.order(:name).pluck(:id, :name)
-    render :json => @playlist
+    if params[:term]
+      # @playlist = Playlist.order(:name).where('upper(name) like upper(:name)', {name: "%#{params[:term]}%"}).pluck(:id, :name)
+      @playlist = Playlist.order(:name).where('upper(name) like upper(:name)', {name: "%#{params[:term]}%"}).pluck(:name, :id)
+    else
+      @playlist = Playlist.all.order(:name).pluck(:id, :name)
+    end
+    @reconstructed_playlist=[]
+    @playlist.each do |list, id|
+      @reconstructed_playlist.push({value: list, id: id})
+    end    
+    render :json => @reconstructed_playlist
   end
 
   # POST /playlists
@@ -116,6 +128,21 @@ class PlaylistsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+  
+  def get_music_list
+      # {value: "Artist-Album-Song", id: 1},
+      # {value: "Album-Song", id: 2},
+      # {value: "Song", id: 3},
+      # {value: "Genre", id: 4}
+    logger.debug("params[:id]: #{params[:id]}")   
+      @musicGrouped = Hash.new
+      MasterLibraryFile.select("artist as artist, coalesce(artist, 'Unknown Artist') as artist_display").group(:artist).order(:artist).each do |artist_list|
+        @musicGrouped[artist_list.artist_display] = MasterLibraryFile.select(:id, :artist, :album, :title).where(artist: artist_list.artist).where("artist is not null and album is not null and title is not null").order(:artist, :title)
+      end
+      respond_to do |format|
+        format.js
+      end
   end
 
   private

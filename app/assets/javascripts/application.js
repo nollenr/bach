@@ -15,5 +15,4 @@
 //= require jquery-ui
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require twitter/typeahead
 //= require_tree .

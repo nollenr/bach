@@ -1,0 +1,4 @@
+   $("#music-list").html("<%= escape_javascript(render partial: 'music_list') %>");
+   $("#music-list").accordion('destroy').accordion({ heightStyle: "fill", collapsible: true});
+   $( "#music-list li" ).draggable('destroy').draggable({ appendTo: "body", helper: "clone"});
+   

@@ -1,13 +1,13 @@
   #accordion-resizer {
     padding: 10px;
-    height: 1600px;
+    /* height: 600px; */
+    overflow: scroll;
   }
 
   h1 { padding: .2em; margin: 0; }
-  #products { float:left; width: 500px; margin-right: 2em; }
-  #cart { width: 200px; float: left; margin-top: 1em; }
+  #playlist01-contents { margin-top: 1em; }
   /* style the list to maximize the droppable hitarea */
-  #cart ol { margin: 0; padding: 1em 0 1em 3em; }
+  #playlist01-contents ol { margin: 0; padding: 1em 0 1em 3em; }
   .blueclass {
     color: blue;
   }

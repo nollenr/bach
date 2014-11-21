@@ -126,10 +126,6 @@ GEM
     tilt (1.4.1)
     turbolinks (2.4.0)
       coffee-rails
-    twitter-typeahead-rails (0.10.5)
-      actionpack (>= 3.1)
-      jquery-rails
-      railties (>= 3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
@@ -159,5 +155,4 @@ DEPENDENCIES
   taglib-ruby (= 0.4.0)
   therubyracer (~> 0.12.1)
   turbolinks
-  twitter-typeahead-rails (~> 0.10)
   uglifier (~> 2.5.3)
