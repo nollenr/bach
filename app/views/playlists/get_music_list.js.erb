@@ -1,4 +1,10 @@
    $("#music-list").html("<%= escape_javascript(render partial: 'music_list') %>");
-   $("#music-list").accordion('destroy').accordion({ heightStyle: "fill", collapsible: true});
-   $( "#music-list li" ).draggable('destroy').draggable({ appendTo: "body", helper: "clone"});
+   $("#music-list").accordion('destroy').accordion({ heightStyle: "content", collapsible: true});
+   $("#music-list li").draggable({
+      appendTo: "body",
+      helper: "clone"
+      //drag: function(event, ui){
+      //  console.log(this.id);
+      //}
+   });
    

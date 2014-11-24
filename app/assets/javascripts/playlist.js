@@ -7,7 +7,7 @@
       }
     });
     $( "#music-list" ).accordion({
-      heightStyle: "conent",
+      heightStyle: "content",
       collapsible: true
     });
     $( "#music-list li" ).draggable({
@@ -105,10 +105,13 @@
     });
     
     $( "#musicDisplay" ).selectmenu({
+      width: $("#musicDisplay").parent().css("width"),
       change: function( event, data) {
-       $.get("/get_music_list", {id: data.item.value}); 
+       $.get("/get_music_list", {id: data.item.value, list: $( "#musicDisplaySegment").val()}); 
       }
     });
-    $( "#musicDisplaySegment" ).selectmenu();
+    $( "#musicDisplaySegment" ).selectmenu({
+      width: $("#musicDisplaySegment").parent().css("width")
+      });
 
   });

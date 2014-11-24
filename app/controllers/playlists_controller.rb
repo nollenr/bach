@@ -135,9 +135,10 @@ class PlaylistsController < ApplicationController
       # {value: "Album-Song", id: 2},
       # {value: "Song", id: 3},
       # {value: "Genre", id: 4}
-    logger.debug("params[:id]: #{params[:id]}")   
+    logger.debug("params[:id]: #{params[:id]}")
+      @musicSegment=params[:list].split("-");
       @musicGrouped = Hash.new
-      MasterLibraryFile.select("artist as artist, coalesce(artist, 'Unknown Artist') as artist_display").group(:artist).order(:artist).each do |artist_list|
+      MasterLibraryFile.select("artist as artist, coalesce(artist, 'Unknown Artist') as artist_display").where("artist between :start and :finish", start: @musicSegment[0], finish: @musicSegment[1]).group(:artist).order(:artist).each do |artist_list|
         @musicGrouped[artist_list.artist_display] = MasterLibraryFile.select(:id, :artist, :album, :title).where(artist: artist_list.artist).where("artist is not null and album is not null and title is not null").order(:artist, :title)
       end
       respond_to do |format|
